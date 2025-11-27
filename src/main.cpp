@@ -70,17 +70,6 @@ void initialize() {
 
   // Set the drive to your own constants from autons.cpp!
   default_constants();
-  while (true) {
-            // print robot location to the brain screen
-            
-            // log position telemetry
-            // delay to save resources
-            // setLBMotors();
-            setIntakeMotors();
-            setDriveMotors();
-            //pros::delay();
-            pros::delay(50);
-        }
 
   // These are already defaulted to these buttons, but you can change the left/right curve buttons here!
   // chassis.opcontrol_curve_buttons_left_set(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);  // If using tank, only the left side is used.
@@ -283,6 +272,12 @@ void opcontrol() {
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
+    // setLBMotors();
+    setIntakeMotors(); //must use own function to set motors other than drivetrain
+    //setDriveMotors(); chassis.opcontrol_arcade_standard(...) already sets drivetrain motors
+    //pros::delay();
+    pros::delay(50);
+
     // . . .
     // Put more user control code here!
     if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){
@@ -301,4 +296,3 @@ void opcontrol() {
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
-
