@@ -1,4 +1,5 @@
 #include "main.h"
+#include <cmath>
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
@@ -376,3 +377,42 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
+
+
+/**
+ * @brief returns heading that bot needs to turn to to face a given point
+ * @note dest_x - current_x (or change in x) cannot equal 0
+ * @param current_x current x-coord of bot
+ * @param current_y current y-coord of bot
+ * @param dest_x x coord of point that bot needs to turn to
+ * @param dest_y y coord of point that bot needs to turn to
+ * @return heading for bot to turn to, based on its current/desired position
+ */
+float get_heading(float current_x, float current_y, float dest_x, float dest_y) {
+  float delta_x = dest_x - current_x;
+  float delta_y = dest_y - current_y;
+
+  if (delta_x < 0.000001 && delta_x > -0.000001) {
+    throw std::invalid_argument("dest_x - current_x cannot = 0");
+  }
+
+  float alpha = atan(delta_y / delta_x) * 180 / acos(1);
+  
+  float theta;
+
+  if (delta_x > 0) {
+    float theta = 90 - alpha;
+  }
+  if (delta_x < 0) {
+    float theta = 270 - alpha;
+  }
+  
+  return theta;
+}
+
+/**
+ * @brief gets distance between current position and desired position of bot
+ */
+float get_distance(float current_x, float current_y, float dest_x, float dest_y) {
+  return sqrt(pow(dest_x - current_x, 2) + pow(dest_y - current_y, 2));
+}
