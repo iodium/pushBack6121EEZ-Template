@@ -383,6 +383,19 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
+void leftQual(){
+
+}
+void rightQual(){
+
+}
+void leftElim(){
+
+}
+void rightElim(){
+
+}
+
 
 
 /**
