@@ -21,7 +21,7 @@ void default_constants() {
   //chassis.pid_turn_constants_set(3.7, 0.67, 27.25, 15.0);     // Turn in place constants
   chassis.pid_turn_constants_set(1.1, 0, 4.5, 0);
   chassis.pid_swing_constants_set(6.0, 0.0, 65.0);           // Swing constants
-  chassis.pid_odom_angular_constants_set(6.5, 0.0, 52.5);    // Angular control for odom motions
+  chassis.pid_odom_angular_constants_set(6.5, 0.0, 52.5);    // Angular contrggit pol for odom motions
   chassis.pid_odom_boomerang_constants_set(5.8, 0.0, 32.5);  // Angular control for boomerang motions
 
   // Exit conditions
