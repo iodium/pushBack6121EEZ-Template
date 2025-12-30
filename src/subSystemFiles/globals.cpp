@@ -6,8 +6,8 @@
 
 
 //motors
- pros::Motor intake1(-10, pros::v5::MotorGears::blue, pros::v5::MotorUnits::degrees);
- pros::Motor intake2(-12, pros::v5::MotorGears::blue, pros::v5::MotorUnits::degrees);
+ pros::Motor intake1(20, pros::v5::MotorGears::blue, pros::v5::MotorUnits::degrees);
+ pros::Motor intake2(11, pros::v5::MotorGears::blue, pros::v5::MotorUnits::degrees);
 // controller
 extern pros::Controller controller(pros::E_CONTROLLER_MASTER);
 

@@ -10,20 +10,18 @@
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-#define DIGITAL_SENSOR_PORT 'A' 
-#define DIGITAL_SENSOR_PORT2 'F' 
-#define DIGITAL_SENSOR_PORT3 'G' 
-#define DIGITAL_SENSOR_PORT4 'H' 
+#define DIGITAL_SENSOR_PORT 'B'
+#define DIGITAL_SENSOR_PORT2 'C' 
+#define DIGITAL_SENSOR_PORT3 'A' 
 
-pros::ADIPneumatics midGoal(DIGITAL_SENSOR_PORT4,false);
+pros::ADIPneumatics hood(DIGITAL_SENSOR_PORT2, false);
 pros::ADIPneumatics wing(DIGITAL_SENSOR_PORT3,false);
-pros::ADIPneumatics odomRetract(DIGITAL_SENSOR_PORT2,false);
 pros::ADIPneumatics matchLoad(DIGITAL_SENSOR_PORT, false);
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-2, -18, -10},     // Left Chassis Ports (negative port will reverse it!)
-    {15, 14, 20},  // Right Chassis Ports (negative port will reverse it!)
+    {-8, 9, -10},     // Left Chassis Ports (negative port will reverse it!)
+    {3, -2, 1},  // Right Chassis Ports (negative port will reverse it!)
 
     5,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -228,7 +226,7 @@ void ez_template_extras() {
       chassis.pid_tuner_toggle();
 
     // Trigger the selected autonomous routine
-    if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
+    if (master.get_digital(DIGITAL_A) && master.get_digital(DIGITAL_X)) {
       pros::motor_brake_mode_e_t preference = chassis.drive_brake_get();
       autonomous();
       chassis.drive_brake_set(preference);
@@ -280,15 +278,35 @@ void opcontrol() {
 
     // . . .
     // Put more user control code here!
-    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){
-        midGoal.toggle();
-    }
-    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
-        wing.toggle();
-    }
-    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
-        matchLoad.toggle();
-    }
+    // if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){
+    //     midGoal.toggle();
+    // }
+    // if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
+    //     wing.toggle();
+    // }
+    // if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
+    //     matchLoad.toggle();
+    // }
+
+            if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+                hood.extend();
+            }
+            else {
+                hood.retract();
+            }
+            if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
+                wing.toggle();
+            }
+            if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
+                matchLoad.toggle();
+            }
+            if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
+                matchLoad.toggle();
+            }
+            if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
+                intakeState = 0;
+            }
+    
     pros::delay(20);
 
     }
