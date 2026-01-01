@@ -68,6 +68,9 @@
 // using namespace okapi;
 // using namespace ez;
 using namespace okapi::literals;
+extern pros::ADIPneumatics hood;
+extern pros::ADIPneumatics wing;
+extern pros::ADIPneumatics matchLoad;
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure

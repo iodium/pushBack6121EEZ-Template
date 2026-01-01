@@ -19,7 +19,7 @@ void default_constants() {
   chassis.pid_drive_constants_set(21.167, 0, 143.0);         // Fwd/rev constants, used for odom and non odom motions
   chassis.pid_heading_constants_set(11.0, 0.0, 20.0);        // Holds the robot straight while going forward without odom
   //chassis.pid_turn_constants_set(3.7, 0.67, 27.25, 15.0);     // Turn in place constants
-  chassis.pid_turn_constants_set(1.1, 0, 4.5, 0);
+  chassis.pid_turn_constants_set(1.18, 0, 5.4, 0);
   chassis.pid_swing_constants_set(6.0, 0.0, 65.0);           // Swing constants
   chassis.pid_odom_angular_constants_set(6.5, 0.0, 52.5);    // Angular contrggit pol for odom motions
   chassis.pid_odom_boomerang_constants_set(5.8, 0.0, 32.5);  // Angular control for boomerang motions
@@ -383,15 +383,68 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
+
+
+//intake:
+//4 = intake, no score
+//3 = outtake a bit
+//1 = outtake (full)
+//2 = intake & score
+//0 = off
+
 void leftQual(){
 
+  chassis.drive_angle_set(0_deg); //sets initial heading to facing 0 degrees
+
+  chassis.pid_drive_set(32.661, 70); //drive till in front of match load
+  chassis.pid_wait();
+
+  
+  chassis.pid_turn_set(270_deg, 90); //turn to face match load
+  chassis.pid_wait();
+
+  matchLoad.extend(); //extend match load pneumatics to grab match load
+  pros::delay(500); //wait for pneumatics to extend
+
+  chassis.pid_drive_set(10, 40); //drive into matchload
+  
+  intakeState = 4; //intake matchload balls
+  setIntakeMotors();
+  pros::delay(1300); //wait for balls to be intaken
+
+  chassis.pid_drive_set(-27.961, 70); //move backwards into long goal
+  pros::delay(500); //wait a bit before retracting matchload
+  matchLoad.retract(); //retract match load 
+  chassis.pid_wait();
+
+  matchLoad.retract(); //retract match load
+  hood.extend(); //extend hood to prepare for scoring
+
+  setIntake(-127, 127); //score balls into long goal
+  pros::delay(1200); //wait for balls to be scored
+  setIntake(0,0); //stop intaking
+
+  chassis.pid_drive_set(10, 60); //move out from long goal
+  chassis.pid_wait();
+  hood.retract(); //retract hood after moving out of long goal
+
+  chassis.pid_turn_set(get_heading(-40.021, 46.798, -22.115, 21.729), 75);
+  //chassis.pid_turn_set(135, 75); //turn to face next set of balls
+  chassis.pid_wait();
+
+  
+
+
 }
+
 void rightQual(){
 
 }
+
 void leftElim(){
 
 }
+
 void rightElim(){
 
 }
@@ -415,15 +468,15 @@ float get_heading(float current_x, float current_y, float dest_x, float dest_y) 
     throw std::invalid_argument("dest_x - current_x cannot = 0");
   }
 
-  float alpha = atan(delta_y / delta_x) * 180 / acos(1);
+  float alpha = atan(delta_y / delta_x) * 180 / acos(-1);
   
   float theta;
 
   if (delta_x > 0) {
-    float theta = 90 - alpha;
+    theta = 90 - alpha;
   }
   if (delta_x < 0) {
-    float theta = 270 - alpha;
+    theta = 270 - alpha;
   }
   
   return theta;

@@ -21,3 +21,6 @@ void leftQual();
 void rightQual();
 void leftElim();
 void rightElim();
+
+float get_heading(float current_x, float current_y, float dest_x, float dest_y);
+float get_distance(float current_x, float current_y, float dest_x, float dest_y);
