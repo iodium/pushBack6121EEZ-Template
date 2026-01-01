@@ -428,13 +428,18 @@ void leftQual(){
   chassis.pid_wait();
   hood.retract(); //retract hood after moving out of long goal
 
-  chassis.pid_turn_set(get_heading(-40.021, 46.798, -22.115, 21.729), 75);
-  //chassis.pid_turn_set(135, 75); //turn to face next set of balls
+  chassis.pid_turn_set(get_heading(-40.021, 46.798, -22.115, 21.729), 75); //turn to face next set of balls
   chassis.pid_wait();
 
+  chassis.pid_drive_set(get_distance(-40.021, 46.798, -22.115, 21.729), 45); //drive to next set of balls
+  intakeState = 4; //intake balls
+  setIntakeMotors();
+  chassis.pid_wait();
+  setIntake(0, 0); //stop intaking
+
+  chassis.pid_turn_set(get_heading(-22.115, 21.729, -10.351, 10.351) + 180, 75); //turn to face goal
+  chassis.pid_wait();
   
-
-
 }
 
 void rightQual(){
