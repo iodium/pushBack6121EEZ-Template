@@ -417,7 +417,6 @@ void leftQual(){
   matchLoad.retract(); //retract match load 
   chassis.pid_wait();
 
-  matchLoad.retract(); //retract match load
   hood.extend(); //extend hood to prepare for scoring
 
   setIntake(-127, 127); //score balls into long goal
@@ -455,7 +454,123 @@ void rightElim(){
 
 }
 
+void skills(){
+  chassis.drive_angle_set(180_deg); //sets initial heading to facing 180 degrees
 
+  chassis.pid_drive_set(32.661, 70); //drive till in front of match load
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(270_deg, 90);
+  chassis.pid_wait();
+
+  matchLoad.extend(); //extend match load piston
+  pros::delay(500); //wait for it to extend
+
+  chassis.pid_drive_set(10, 40); //drive into matchload
+  
+  intakeState = 4; //intake matchload balls
+  setIntakeMotors();
+  pros::delay(2400); //wait for balls to be intaken
+
+  chassis.pid_drive_set(-10, 70); //back out of matchload
+  chassis.pid_wait();
+  intakeState = 0; //stop intaking
+  setIntakeMotors();
+  matchLoad.retract(); //retract matchload 
+
+  chassis.pid_turn_set(180, 90); //turn to face wall
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(11.571, 60); //drive forward slightly to stay clear of long goal
+  chassis.pid_wait();
+  
+  wing.extend(); //raise wing to keep it from hitting long goal
+  
+  chassis.pid_turn_set(90, 90); //turn to face opposite matchload
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(86.198, 80); //drive to other side of long goal
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(0, 90); //turn to face perpendicular to long goal
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(12.148, 60); //set up to go into long goal
+  chassis.pid_wait();
+  chassis.pid_turn_set(90, 90);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-5.592, 60); //drive backwards into long goal
+  hood.extend(); //extend hood to prepare for scoring
+  pros::delay(500);
+
+  setIntake(-127, 127); //score balls into long goal
+  pros::delay(2500); //wait for balls to be scored
+  setIntake(0,0); //stop intaking
+
+  chassis.pid_drive_set(27.961, 50); //start driving into matchload
+  pros::delay(500);
+  hood.retract(); //retract hood
+  matchLoad.extend(); //extend matchload
+  pros::delay(500);
+  intakeState = 4; //start intaking matchload balls
+  setIntakeMotors();
+  pros::delay(3500); //wait for balls to be intaken
+
+  chassis.pid_drive_set(-27.961, 70); //start driving backwards into long goal
+  hood.extend(); //extend hood to get ready to score
+  pros::delay(500); 
+  matchLoad.retract(); //retract matchload after waiting a bit
+  chassis.pid_wait();
+
+  setIntake(-127, 127); //score balls into long goal
+  pros::delay(2500); //wait for balls to be scored
+  setIntake(0,0); //stop intaking  
+
+  chassis.pid_drive_set(5.592, 60); //drive out of long goal
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(get_heading(36.508, -47.307, 25.516, -35.351), 90); //turn to face middle
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(get_distance(36.508, -47.307, 25.516, -35.351), 70); //drive to intermediate spot
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(270, 90); //turn to face next intermediate spot
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(27.575, 70); //drive to next intermediate spot
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(0, 90); //turn to face up
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(11.57, 70); //drive to set up to intake middle balls
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(270, 90); //turn to face middle balls
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(21.341, 50); //drive forward and intake balls
+  intakeState = 4;
+  setIntakeMotors();
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(0, 90); //turn to face next set of middle balls
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(47.245, 60); //drive up and intake balls
+  chassis.pid_wait();
+  setIntake(0, 0); //stop intaking
+
+  chassis.pid_turn_set(get_heading(-23.657, 23.464, -12.858, 12.666) + 180, 90); //turn to face back to middle goal
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(get_distance(-23.657, 23.464, -12.858, 12.666) * -1, 70);
+  pros::delay(500);
+  
+
+}
 
 /**
  * @brief returns heading that bot needs to turn to to face a given point
