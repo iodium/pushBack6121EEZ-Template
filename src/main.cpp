@@ -75,9 +75,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+      {"Left Elim", leftElim},
       {"Left Qual", leftQual},
       {"Right Qual", rightQual},
-      {"Left Elim", leftElim},
       {"Right Elim", rightElim},
       {"Skills", skills},
       {"Drive\n\nDrive forward and come back", drive_example},
@@ -264,6 +264,7 @@ void ez_template_extras() {
 void opcontrol() {
   // This is preference to what you like to drive on
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
+  intakeState = 0;
 
   while (true) {
     // Gives you some extras to make EZ-Template ezier
