@@ -427,7 +427,7 @@ void leftQual(){
   chassis.pid_wait();
   hood.retract(); //retract hood after moving out of long goal
 
-  chassis.pid_turn_set(get_heading(-40.021, 46.798, -22.115, 21.729), 75); //turn to face next set of balls
+  chassis.pid_turn_set(get_heading(-40.021, 46.798, -23.3, 21.243), 75); //turn to face next set of balls
   chassis.pid_wait();
 
   chassis.pid_drive_set(get_distance(-40.021, 46.798, -23.3, 21.243), 40); //drive to next set of balls
