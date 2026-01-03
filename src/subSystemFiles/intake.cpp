@@ -31,7 +31,7 @@ void setIntakeMotors() {
         }
         else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && 
             controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) || intakeState == 1){
-            setIntake(-117,-50);
+            setIntake(-117,-60);
         }
         else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && 
                 !controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && 
@@ -42,8 +42,7 @@ void setIntakeMotors() {
             setIntake(127,-127);
         }
         else if (intakeState == 3){
-            setIntake(0,127);
-
+            setIntake(30,-30);
         }
         else{
             setIntake(0,0);            
