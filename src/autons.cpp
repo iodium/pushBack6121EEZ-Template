@@ -504,7 +504,7 @@ void leftElim(){
   setIntakeMotors(); //stop intaking
 
 
-  chassis.pid_drive_set(get_distance(-21.536, 23.272, -43.327, 47.605), 75); //drive to matchload setup
+  chassis.pid_drive_set(get_distance(-21.536, 23.272, -43.327, 48.605), 75); //drive to matchload setup
   chassis.pid_wait();
 
   chassis.pid_turn_set(270, 105); //turn to face matchload
