@@ -627,11 +627,11 @@ void skills(){
   matchLoad.extend(); //extend match load piston
   pros::delay(200); //wait for it to extend
 
-  chassis.pid_drive_set(10, 40); //drive into matchload
+  chassis.pid_drive_set(13.2, 40); //drive into matchload
   
   intakeState = 4; //intake matchload balls
   setIntakeMotors();
-  pros::delay(2400); //wait for balls to be intaken
+  pros::delay(2700); //wait for balls to be intaken
 
   chassis.pid_drive_set(-10, 70); //back out of matchload
   chassis.pid_wait();
@@ -639,10 +639,10 @@ void skills(){
   setIntakeMotors();
   matchLoad.retract(); //retract matchload 
 
-  chassis.pid_turn_set(180, 90); //turn to face wall
+  chassis.pid_turn_set(get_heading(-49.332, -47.692, -41.784, -62.263), 90); //turn to go into alley
   chassis.pid_wait();
 
-  chassis.pid_drive_set(13.571, 60); //drive forward slightly to stay clear of long goal
+  chassis.pid_drive_set(get_distance(-49.332, -47.692, -41.784, -62.263), 60); //drive forward into alley
   chassis.pid_wait();
   
   wing.extend(); //raise wing to keep it from hitting long goal
