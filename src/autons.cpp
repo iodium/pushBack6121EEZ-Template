@@ -681,6 +681,7 @@ void skills(){
   pros::delay(2600); //wait for balls to be scored
   setIntake(0,0); //stop intaking
   hood.retract(); //retract hood too slightly push ball further into long goal
+  pros::delay(100);
 
   chassis.pid_drive_set(27.713, 65); //move out from long goal, into matchload
   pros::delay(100);
@@ -702,12 +703,12 @@ void skills(){
   // pros::delay(300);
 
   chassis.pid_drive_set(-60, 50); //keep driving backwards to help score
-  setIntake(-127, 127); //score balls into long goal
+  setIntake(-127, 80); //score balls into long goal
   pros::delay(2600); //wait for balls to be scored
   setIntake(0,0); //stop intaking
 
   hood.retract(); //retract hood to slightly push ball further into long goal
-
+  pros::delay(100);
   chassis.pid_drive_set(14.27, 75); //move out from long goal
   pros::delay(600);
 
@@ -765,6 +766,7 @@ void skills(){
   pros::delay(2600); //wait for balls to be scored
   setIntake(0,0); //stop intaking
   hood.retract(); //retract hood to slightly push ball further into long goal
+  pros::delay(100);
 
   chassis.pid_drive_set(27.713, 60); //move out from long goal, into matchload
   pros::delay(100);
@@ -782,11 +784,12 @@ void skills(){
   pros::delay(300);
 
   chassis.pid_drive_set(-60, 50); //keep driving backwards to help score
-  setIntake(-127, 127); //score balls into long goal
+  setIntake(-127, 80); //score balls into long goal
   pros::delay(2600); //wait for balls to be scored
   setIntake(0,0); //stop intaking
   hood.retract(); //retract hood to slightly push ball further into long goal
-  
+  pros::delay(100);
+
   chassis.pid_drive_set(14.27, 75); //move out from long goal
   pros::delay(300);
   hood.retract(); //retract hood after moving out of long goal
@@ -794,7 +797,26 @@ void skills(){
 
   chassis.pid_turn_set(320, 105); //turn to face towards parking zone
   pros::delay(500);
+  chassis.pid_drive_set(40, 75); //drive into wall
+  pros::delay(700);
+  chassis.pid_turn_set(340, 105); //turn to face towards parking zone
+  pros::delay(500);
+  chassis.pid_drive_set(10, 75); //drive into wall
+  pros::delay(500);
+  chassis.pid_turn_set(0, 105); //turn to face towards parking zone
+  pros::delay(500);
+  chassis.pid_drive_set(15, 75); //drive into park
+  pros::delay(500);
+  matchLoad.extend();
+  chassis.pid_drive_set(-6, 75); //move back a bit to hook onto platform
+  pros::delay(300);
+  chassis.pid_drive_set(40, 105); //move forward into park
+  setIntake(-127, 30);
+  pros::delay(1000);
+  matchLoad.retract();
 
+
+  
 
 
 }

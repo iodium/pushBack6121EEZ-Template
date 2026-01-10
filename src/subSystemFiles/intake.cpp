@@ -44,6 +44,9 @@ void setIntakeMotors() {
         else if (intakeState == 3){
             setIntake(30,-30);
         }
+        else if (intakeState == 5){
+            setIntake(-127,100);
+        }
         else{
             setIntake(0,0);            
         }  
