@@ -824,7 +824,11 @@ void soloAWP() {
   chassis.drive_angle_set(0_deg); //sets initial heading to facing 0 degrees
   wing.extend();
 
-  chassis.pid_drive_set(32.1, 85); //drive till in front of match load
+  chassis.pid_drive_set(-5, 105); //drive to push alliance
+
+
+
+  chassis.pid_drive_set(46, 85); //drive till in front of match load
   chassis.pid_wait();
   
   chassis.pid_turn_set(270_deg, 105); //turn to face match load
