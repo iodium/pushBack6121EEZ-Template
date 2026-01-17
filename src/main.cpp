@@ -17,6 +17,7 @@
 pros::ADIPneumatics hood(DIGITAL_SENSOR_PORT2, false);
 pros::ADIPneumatics wing(DIGITAL_SENSOR_PORT3,false);
 pros::ADIPneumatics matchLoad(DIGITAL_SENSOR_PORT, false);
+int program = 0; // 0 = match, 1 = skills
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
@@ -75,11 +76,21 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+
       {"Skills", skills},
+
+      {"Right 4 Push Matchload", right4PushMatchload},
+
+      {"Solo AWP", soloAWP},
+
       {"Left Qual", leftQual},
+      
+      {"Right 4 Rush", right4Rush},
+
       {"Right Qual", rightQual},
+
       {"Left Elim", leftElim},
-      {"Right Elim", rightElim},
+
       {"Drive\n\nDrive forward and come back", drive_example},
       {"Turn\n\nTurn 3 times.", turn_example},
       {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
@@ -300,8 +311,8 @@ void opcontrol() {
             else {
                 hood.retract();
             }
-            if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
-                wing.toggle();
+            if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
+              wing.toggle();
             }
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
                 matchLoad.toggle();

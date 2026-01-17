@@ -30,19 +30,22 @@ void setIntakeMotors() {
             setIntake(-127, 127);            
         }
         else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && 
-            controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) || intakeState == 1){
-            setIntake(-117,-50);
+            controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) || intakeState == 1){ //score middle goal
+            setIntake(-117,-50); // originally -117, -50
         }
         else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && 
                 !controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && 
                 !controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) || intakeState == 4){
             setIntake(-127,30);
         }
-        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
             setIntake(127,-127);
         }
         else if (intakeState == 3){
             setIntake(30,-30);
+        }
+        else if (intakeState == 5){
+            setIntake(-127,100);
         }
         else{
             setIntake(0,0);            
