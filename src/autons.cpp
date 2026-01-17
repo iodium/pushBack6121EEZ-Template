@@ -795,8 +795,6 @@ void skills(){
   chassis.pid_turn_set(320, 105); //turn to face towards parking zone
   pros::delay(500);
 
-
-
 }
 
 
