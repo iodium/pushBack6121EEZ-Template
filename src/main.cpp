@@ -14,9 +14,18 @@
 #define DIGITAL_SENSOR_PORT2 'C' 
 #define DIGITAL_SENSOR_PORT3 'A' 
 
+#define SIDE_DIST_SENSOR_PORT 0 //digital sensor ports (random numbers for now)
+#define PERPENDICULAR_DIST_SENSOR_PORT 1
+
 pros::ADIPneumatics hood(DIGITAL_SENSOR_PORT2, false);
 pros::ADIPneumatics wing(DIGITAL_SENSOR_PORT3,false);
 pros::ADIPneumatics matchLoad(DIGITAL_SENSOR_PORT, false);
+
+
+//construct distance sensors
+pros::Distance sideDistanceSensor(SIDE_DIST_SENSOR_PORT);
+pros::Distance perpendicularDistanceSensor(PERPENDICULAR_DIST_SENSOR_PORT);
+
 int program = 0; // 0 = match, 1 = skills
 // Chassis constructor
 ez::Drive chassis(
@@ -281,9 +290,9 @@ void opcontrol() {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
 
-    //chassis.opcontrol_tank();  // Tank control
-    chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-    // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
+    chassis.opcontrol_tank();  // Tank control
+    //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+    //chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
