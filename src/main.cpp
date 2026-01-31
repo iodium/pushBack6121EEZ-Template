@@ -86,6 +86,10 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
 
+      {"Right Qual", rightQual},
+
+      {"Left Elim", leftElim},
+
       {"Skills", skills},
 
       {"Right 4 Push Matchload", right4PushMatchload},
@@ -95,10 +99,6 @@ void initialize() {
       {"Left Qual", leftQual},
       
       {"Right 4 Rush", right4Rush},
-
-      {"Right Qual", rightQual},
-
-      {"Left Elim", leftElim},
 
       {"Drive\n\nDrive forward and come back", drive_example},
       {"Turn\n\nTurn 3 times.", turn_example},
