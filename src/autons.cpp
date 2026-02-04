@@ -1053,3 +1053,44 @@ void match_load_procedure(int times, double wiggle_amount) {
 
   pros::delay(2000 - times * 600); //wait for balls to be intaken
 }
+
+/**
+ * @brief returns (with double precision) x-coordinate of the center of the bot on the field
+ * @brief from the perspective of red side, positive x is forward, positive y is left
+ * @details uses distance sensors to calculate position based on current distance to walls
+ * @param facing 1 = positive_x, 2 = positive_y, 3 = negative_x, 4 = negative_y
+ * @param length length of the bot
+ * @param width width of the bot
+ */
+double get_x(int facing, double length, double width) {
+  double x;
+
+  if (facing == 1) {
+    double dist = backDistanceSensor.get() / 25.4 + length / 2; //distance from wall to center of bot, converted to inches
+    x = dist - 70; // distance from center to edge of field is 70 inches
+  }
+  if (facing == 3) {
+    double dist = backDistanceSensor.get() / 25.4 + length / 2; 
+    x = 70 - dist;
+  }
+  if (facing == 2) {
+    double dist = leftDistanceSensor.get() / 25.4 + width / 2;
+    x = dist - 70;
+  }
+  if (facing == 4) {
+    double dist = rightDistanceSensor.get() / 25.4 + width / 2;
+    x = 70 - dist;
+  }
+
+  return x;
+}
+
+double get_y(int facing, double length, double width) {
+  double y;
+
+  if (facing == 1) {
+    double dist = leftDistanceSensor.get() / 25.4 + width / 2; //distance from wall to center of bot, converted to inches
+    y = dist - 70; // distance from center to edge of field is 70 inches
+  }
+  return y;
+}
