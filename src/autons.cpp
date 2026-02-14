@@ -481,23 +481,23 @@ void rightQual(){
   chassis.drive_angle_set(90_deg); //sets initial heading to facing 90 degrees
   wing.extend();
 
-  chassis.pid_drive_set(10.677, 105); //set up for middle balls
-  pros::delay(350);
+  chassis.pid_turn_set(get_heading(-45.833, -13.946, -27.707, -20.502), 105, true); //turn to face balls
+  pros::delay(500);
 
-  chassis.pid_turn_set(get_heading(-35.227, -14.105, -21.536, -23.272), 105); //turn to face balls
-  pros::delay(400);
-  intakeState = 4; //start intaking balls
+  chassis.pid_drive_set(get_distance(-45.833, -13.946, -27.707, -20.502), 110);
+  intakeState = 4;
   setIntakeMotors();
+  pros::delay(500);
 
-  chassis.pid_drive_set(get_distance(-35.227, -14.105, -21.536, -23.272), 65); // move into balls to intake
-  pros::delay(900);
+  matchLoad.extend();
+  pros::delay(500);
 
-  chassis.pid_turn_set(get_heading(-21.536, -23.272, -43.327, -51.105), 105); //turn to matchload setup
+  chassis.pid_turn_set(get_heading(-27.707, -20.502, -43.327, -46.805), 110); //turn to matchload setup
   pros::delay(600);
   intakeState = 0;
   setIntakeMotors(); //stop intaking
 
-  chassis.pid_drive_set(get_distance(-21.536, -23.272, -43.327, -51.105), 100); //drive to matchload setup
+  chassis.pid_drive_set(get_distance(-27.707, -20.502, -43.327, -46.805), 110); //drive to matchload setup
   pros::delay(1100);
 
   chassis.pid_turn_set(270, 105); //turn to face matchload
@@ -518,7 +518,7 @@ void rightQual(){
   pros::delay(250);
 
   matchLoad.retract(); //retract matchload 
-  chassis.pid_drive_set(-20, 60); //keep wheels driving back to help score
+  chassis.pid_drive_set(-20, 30); //keep wheels driving back to help score
 
   setIntake(-127, 127); //score balls into long goal
   pros::delay(2000); //wait for balls to be scored
@@ -538,26 +538,6 @@ void rightQual(){
 
   chassis.pid_drive_set(-18, 100); //drive into alley and wing
   chassis.pid_wait();
-
-  // chassis.pid_drive_set(8.6777, 110); //drive out to set up wing
-  // chassis.pid_wait();
-  // hood.retract();
-
-  // chassis.pid_turn_set(0, 105); //turn to set up wing
-  // chassis.pid_wait();
-
-  // chassis.pid_drive_set(11.7, 110); //drive to alley lane
-  // chassis.pid_wait();
-
-  // chassis.pid_turn_set(270, 105); //turn to face direction for wing
-  // chassis.pid_wait();
-
-  // wing.retract(); //put wing down
-
-  // chassis.pid_drive_set(-27, 100); //drive into alley and wing
-  // chassis.pid_wait();
-
-
 }
 
 void leftElim(){
@@ -926,80 +906,161 @@ void skills(){
 }
 
 void soloAWP() {
-  chassis.drive_angle_set(0_deg); //sets initial heading to facing 0 degrees
+  chassis.drive_angle_set(180_deg); //sets initial heading to facing 180 degrees
   wing.extend();
 
-  chassis.pid_drive_set(-5, 105); //drive to push alliance
-
-
-
-  chassis.pid_drive_set(46, 85); //drive till in front of match load
-  chassis.pid_wait();
+  chassis.pid_drive_set(33.061, 85); //drive till in front of match load
+  pros::delay(1250);
   
-  chassis.pid_turn_set(270_deg, 105); //turn to face match load
+  chassis.pid_turn_set(270_deg, 115); //turn to face match load
   pros::delay(500);
 
   matchLoad.extend(); //extend match load pneumatics to grab match load
-  pros::delay(250); //wait for pneumatics to extend
+  pros::delay(300); //wait for pneumatics to extend
 
-  chassis.pid_drive_set(11, 105); //drive into matchload
+  chassis.pid_drive_set(11.4, 55); //drive into matchload
 
-  
   intakeState = 4; //intake matchload balls
   setIntakeMotors();
-  pros::delay(700);
-  chassis.pid_drive_set(-0.25, 4);
-  pros::delay(350); //wait for balls to be intaken
+  pros::delay(1100); //wait for balls to be intaken
 
-  chassis.pid_drive_set(-27.961, 95); //move backwards into long goal
-  pros::delay(300); //wait a bit before retracting matchload
+  chassis.pid_drive_set(-27.961, 115); //move backwards into long goal
+  pros::delay(500); //wait a bit before retracting matchload
   matchLoad.retract(); //retract match load 
   chassis.pid_wait();
 
   hood.extend(); //extend hood to prepare for scoring
 
   setIntake(-127, 127); //score balls into long goal
-  chassis.pid_drive_set(-30, 95); //keep driving into long goal
-
-  pros::delay(1350); //wait for balls to be scored
+  pros::delay(1000); //wait for balls to be scored
   setIntake(0,0); //stop intaking
-  chassis.pid_turn_set(165, 105); //turn left to middle balls
-  pros::delay(850);
-  
-  hood.retract(); //retract hood after moving out of long goal
-  chassis.pid_drive_set(12.5, 60);
-  setIntake(-127, 30); //intake middle balls
+
+  chassis.pid_turn_set(10, 105); // turn to face next set of balls while at long goal
+  pros::delay(1000);
+
+  chassis.pid_drive_set(15, 75); //move forward into next set of balls
+  hood.retract(); 
+  intakeState = 4; //intake balls
+  setIntakeMotors();
+  pros::delay(675);
+
+  chassis.pid_turn_set(0, 105); //turn to face next set of balls on left side of field
   pros::delay(500);
-  chassis.pid_turn_set(315, 105); //turn into middle goal
+
+  chassis.pid_drive_set(48, 100); //move forward into next set of balls
+  pros::delay(800);
+  matchLoad.extend(); //extend match load to trap balls
+
   pros::delay(500);
-  setIntake(0, 0);
-  chassis.pid_drive_set(-13, 105); //drive into middle goal
-  pros::delay(400);
-  hood.extend();
-  setIntake(-117, -50); // score on middle goal
-  pros::delay(1350);
   setIntake(0, 0); //stop intaking
-  chassis.pid_drive_set(5, 75);
+
+  chassis.pid_turn_set(-45, 105); //turn to face back to mid goal
+  pros::delay(500);
+
+  chassis.pid_drive_set(-16.4, 105); //drive backwards into mid goal
+  hood.extend();
+  intakeState = 3;
+  setIntakeMotors(); //outake a bit to free up balls
   pros::delay(200);
-  chassis.pid_turn_set(195, 105); //turn to other side's balls
+  setIntake(0, 0);
+  pros::delay(600);
+
+  matchLoad.retract(); 
+  intakeState = 1;
+  setIntakeMotors(); //score mid goal
+  pros::delay(1500);
+  setIntake(0, 0); //stop intaking
+
+  chassis.pid_drive_set(get_distance(-12, 12, -41.013, 45.255), 105); //drive to set up long goal
   hood.retract();
   pros::delay(800);
-  chassis.pid_drive_set(50, 50); //drive into middle balls
-  setIntake(-127, 30); //start intaking
-  pros::delay(1300);
-  chassis.pid_turn_set(215, 105); //turn to set up for scoring
-  pros::delay(600);
-  chassis.pid_drive_set(34, 105);//drive to set up for long goal
-  pros::delay(900);
 
-  chassis.pid_turn_set(270, 105); //turn into long goal
+  chassis.pid_turn_set(270, 105); //turn to face back to long goal
   pros::delay(500);
-  setIntake(0, 0); //stop intaking
 
-  chassis.pid_drive_set(-12, 90);//drive into long goal
-  pros::delay(300);
-  hood.extend();
-  setIntake(-127, 127);
+  chassis.pid_drive_set(-20, 105); //drive into long goal
+  hood.extend(); 
+  pros::delay(800);
+
+  setIntake(-127, 127); //score balls into long goal
+  pros::delay(1000); //wait for balls to be scored    
+  setIntake(0,0); //stop intaking
+
+
+  // chassis.drive_angle_set(0_deg); //sets initial heading to facing 0 degrees
+  // wing.extend();
+
+  // chassis.pid_drive_set(-5, 105); //drive to push alliance
+
+
+
+  // chassis.pid_drive_set(46, 85); //drive till in front of match load
+  // pros::delay(1000);
+  
+  // chassis.pid_turn_set(270_deg, 105); //turn to face match load
+  // pros::delay(500);
+
+  // matchLoad.extend(); //extend match load pneumatics to grab match load
+  // pros::delay(250); //wait for pneumatics to extend
+
+  // chassis.pid_drive_set(11, 105); //drive into matchload
+
+  
+  // intakeState = 4; //intake matchload balls
+  // setIntakeMotors();
+  // pros::delay(700);
+  // chassis.pid_drive_set(-0.25, 4); //drive out slightly to help intake
+  // pros::delay(350); //wait for balls to be intaken
+
+  // chassis.pid_drive_set(-27.961, 95); //move backwards into long goal
+  // pros::delay(300); //wait a bit before retracting matchload
+  // matchLoad.retract(); //retract match load
+  // chassis.pid_wait();
+
+  // hood.extend(); //extend hood to prepare for scoring
+
+  // setIntake(-127, 127); //score balls into long goal
+  // chassis.pid_drive_set(-30, 95); //keep driving into long goal
+
+  // pros::delay(1350); //wait for balls to be scored
+  // setIntake(0,0); //stop intaking
+  // chassis.pid_turn_set(165, 105); //turn left to middle balls
+  // pros::delay(850);
+  
+  // hood.retract(); //retract hood after moving out of long goal
+  // chassis.pid_drive_set(12.5, 60);
+  // setIntake(-127, 30); //intake middle balls
+  // pros::delay(500);
+  // chassis.pid_turn_set(315, 105); //turn into middle goal
+  // pros::delay(500);
+  // setIntake(0, 0);
+  // chassis.pid_drive_set(-13, 105); //drive into middle goal
+  // pros::delay(400);
+  // hood.extend();
+  // setIntake(-117, -50); // score on middle goal
+  // pros::delay(1350);
+  // setIntake(0, 0); //stop intaking
+  // chassis.pid_drive_set(5, 75);
+  // pros::delay(200);
+  // chassis.pid_turn_set(195, 105); //turn to other side's balls
+  // hood.retract();
+  // pros::delay(800);
+  // chassis.pid_drive_set(50, 50); //drive into middle balls
+  // setIntake(-127, 30); //start intaking
+  // pros::delay(1300);
+  // chassis.pid_turn_set(215, 105); //turn to set up for scoring
+  // pros::delay(600);
+  // chassis.pid_drive_set(34, 105);//drive to set up for long goal
+  // pros::delay(900);
+
+  // chassis.pid_turn_set(270, 105); //turn into long goal
+  // pros::delay(500);
+  // setIntake(0, 0); //stop intaking
+
+  // chassis.pid_drive_set(-12, 90);//drive into long goal
+  // pros::delay(300);
+  // hood.extend();
+  // setIntake(-127, 127);
 }
 
 /**

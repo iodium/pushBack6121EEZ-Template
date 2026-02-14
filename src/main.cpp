@@ -88,17 +88,17 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
 
+      {"Solo AWP", soloAWP},
+
       {"Right Qual", rightQual},
 
       {"Left Elim", leftElim},
 
+      {"Left Qual", leftQual},
+
       {"Skills", skills},
 
       {"Right 4 Push Matchload", right4PushMatchload},
-
-      {"Solo AWP", soloAWP},
-
-      {"Left Qual", leftQual},
       
       {"Right 4 Rush", right4Rush},
 
@@ -292,8 +292,8 @@ void opcontrol() {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
 
-    chassis.opcontrol_tank();  // Tank control
-    //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+    //chassis.opcontrol_tank();  // Tank control
+    chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
     //chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
