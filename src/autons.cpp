@@ -930,10 +930,11 @@ void soloAWP() {
   wing.extend();
 
   chassis.pid_drive_set(-5, 105); //drive to push alliance
+  pros::delay(200);
 
 
 
-  chassis.pid_drive_set(46, 85); //drive till in front of match load
+  chassis.pid_drive_set(50, 85); //drive till in front of match load
   chassis.pid_wait();
   
   chassis.pid_turn_set(270_deg, 105); //turn to face match load
@@ -942,7 +943,7 @@ void soloAWP() {
   matchLoad.extend(); //extend match load pneumatics to grab match load
   pros::delay(250); //wait for pneumatics to extend
 
-  chassis.pid_drive_set(11, 105); //drive into matchload
+  chassis.pid_drive_set(12, 105); //drive into matchload
 
   
   intakeState = 4; //intake matchload balls
@@ -981,25 +982,27 @@ void soloAWP() {
   setIntake(0, 0); //stop intaking
   chassis.pid_drive_set(5, 75);
   pros::delay(200);
-  chassis.pid_turn_set(195, 105); //turn to other side's balls
+  chassis.pid_turn_set(190, 105); //turn to other side's balls
   hood.retract();
-  pros::delay(800);
-  chassis.pid_drive_set(50, 50); //drive into middle balls
+  pros::delay(650);
+  chassis.pid_drive_set(55, 50); //drive into middle balls
   setIntake(-127, 30); //start intaking
   pros::delay(1300);
   chassis.pid_turn_set(215, 105); //turn to set up for scoring
   pros::delay(600);
-  chassis.pid_drive_set(34, 105);//drive to set up for long goal
+  chassis.pid_drive_set(35, 105);//drive to set up for long goal
   pros::delay(900);
 
   chassis.pid_turn_set(270, 105); //turn into long goal
   pros::delay(500);
   setIntake(0, 0); //stop intaking
 
-  chassis.pid_drive_set(-12, 90);//drive into long goal
-  pros::delay(300);
+  chassis.pid_drive_set(-14, 90);//drive into long goal
+  pros::delay(400);
   hood.extend();
   setIntake(-127, 127);
+  chassis.pid_drive_set(-20, 90);//drive into long goal
+
 }
 
 /**
