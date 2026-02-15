@@ -71,6 +71,11 @@ using namespace okapi::literals;
 extern pros::ADIPneumatics hood;
 extern pros::ADIPneumatics wing;
 extern pros::ADIPneumatics matchLoad;
+extern pros::Distance rightDistanceSensor;
+extern pros::Distance leftDistanceSensor;
+extern pros::Distance backDistanceSensor;
+
+
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure

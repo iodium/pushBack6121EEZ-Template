@@ -14,9 +14,20 @@
 #define DIGITAL_SENSOR_PORT2 'C' 
 #define DIGITAL_SENSOR_PORT3 'A' 
 
+#define LEFT_DIST_SENSOR_PORT 0 //digital sensor ports (random numbers for now)
+#define BACK_DIST_SENSOR_PORT 1
+#define RIGHT_DIST_SENSOR_PORT 2
+
 pros::ADIPneumatics hood(DIGITAL_SENSOR_PORT2, false);
 pros::ADIPneumatics wing(DIGITAL_SENSOR_PORT3,false);
 pros::ADIPneumatics matchLoad(DIGITAL_SENSOR_PORT, false);
+
+
+//construct distance sensors
+pros::Distance leftDistanceSensor(LEFT_DIST_SENSOR_PORT);
+pros::Distance rightDistanceSensor(RIGHT_DIST_SENSOR_PORT);
+pros::Distance backDistanceSensor(BACK_DIST_SENSOR_PORT);
+
 int program = 0; // 0 = match, 1 = skills
 // Chassis constructor
 ez::Drive chassis(
@@ -84,16 +95,18 @@ void initialize() {
 
       {"Left Elim", leftElim},
 
+      {"Solo AWP", soloAWP},
+
+      {"Left Qual", leftQual},
+
       {"Skills", skills},
-
-      {"Right 4 Push Matchload", right4PushMatchload},
-
-
-      
-      {"Right 4 Rush", right4Rush},
 
       {"Right Qual", rightQual},
 
+
+      {"Right 4 Push Matchload", right4PushMatchload},
+      
+      {"Right 4 Rush", right4Rush},
 
       {"Drive\n\nDrive forward and come back", drive_example},
       {"Turn\n\nTurn 3 times.", turn_example},
@@ -287,7 +300,7 @@ void opcontrol() {
 
     //chassis.opcontrol_tank();  // Tank control
     chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-    // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
+    //chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
