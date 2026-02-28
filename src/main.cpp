@@ -18,8 +18,10 @@
 #define BACK_DIST_SENSOR_PORT 1
 #define RIGHT_DIST_SENSOR_PORT 2
 
-pros::ADIPneumatics hood(DIGITAL_SENSOR_PORT2, false);
-pros::ADIPneumatics wing(DIGITAL_SENSOR_PORT3,false);
+pros::ADIPneumatics tripleStateDown(DIGITAL_SENSOR_PORT3, false);
+pros::ADIPneumatics tripleStateUp(DIGITAL_SENSOR_PORT, false); //update digital sensor port
+
+pros::ADIPneumatics wing(DIGITAL_SENSOR_PORT2,false);
 pros::ADIPneumatics matchLoad(DIGITAL_SENSOR_PORT, false);
 
 
@@ -32,10 +34,10 @@ int program = 0; // 0 = match, 1 = skills
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-8, 9, -10},     // Left Chassis Ports (negative port will reverse it!)
-    {3, -2, 1},  // Right Chassis Ports (negative port will reverse it!)
+    {-13, -11, -12},     // Left Chassis Ports (negative port will reverse it!)
+    {18, 20, 19},  // Right Chassis Ports (negative port will reverse it!)
 
-    5,      // IMU Port
+    17,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     450);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
@@ -331,16 +333,20 @@ void opcontrol() {
     // }
 
             if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-                hood.extend();
+                tripleStateDown.retract();
+                tripleStateUp.retract();
             }
-            else {
-                hood.retract();
+            else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+                tripleStateDown.extend();
+                tripleStateUp.extend();
+            }
+            else{
+                tripleStateDown.retract();
+                tripleStateUp.extend();
+
             }
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
               wing.toggle();
-            }
-            if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
-                matchLoad.toggle();
             }
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
                 matchLoad.toggle();

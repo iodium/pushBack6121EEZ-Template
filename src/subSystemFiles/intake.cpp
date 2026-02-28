@@ -25,24 +25,19 @@ void setIntake(int power1, int power2) {
 // }
 
 void setIntakeMotors() {
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && 
-            controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) || intakeState == 2) { 
-            setIntake(-127, 127);            
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) || intakeState == 2 || controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) { 
+            setIntake(127, -127);            
         }
-        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && 
+        else if (
             controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) || intakeState == 1){ //score middle goal
-            setIntake(-117,-50); // originally -117, -50
+            setIntake(80,-80); // originally -117, -50
         }
-        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && 
-                !controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && 
-                !controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) || intakeState == 4){
-            setIntake(-127,30);
-        }
+        
         else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
-            setIntake(127,-127);
+            setIntake(-127,127);
         }
-        else if (intakeState == 3){
-            setIntake(30,-30);
+        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)|| intakeState == 3){
+            setIntake(45,-45);
         }
         else if (intakeState == 5){
             setIntake(-127,100);
