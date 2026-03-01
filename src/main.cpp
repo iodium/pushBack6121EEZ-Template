@@ -90,10 +90,14 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-
       {"Left Elim", leftElim},
 
       {"Right Qual", rightQual},
+
+
+
+
+
 
       {"Turn\n\nTurn 3 times.", turn_example},
 
