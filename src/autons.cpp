@@ -498,14 +498,14 @@ void rightQual(){
 
   matchLoad.extend(); //extend matchload
   fullIntake(); //intake matchload balls
-  chassis.pid_drive_set(20, 55); //drive into matchload while intaking
+  chassis.pid_drive_set(20.5, 65); //drive into matchload while intaking
   pros::delay(1000);
-  match_load_procedure(2, 1);
+  match_load_procedure(2, 0.6);
   chassis.pid_drive_set(-8, 100); //drive backwards into long goal
   pros::delay(200);
-  chassis.pid_turn_set(265, 100); //drive backwards into long goal
+  chassis.pid_turn_set(265, 100); 
   pros::delay(200);
-  chassis.pid_drive_set(-21, 100); //drive backwards into long goal
+  chassis.pid_drive_set(-21, 100); 
   pros::delay(400);
 
 
