@@ -10,16 +10,17 @@
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-#define DIGITAL_SENSOR_PORT 'B'
+#define DIGITAL_SENSOR_PORT 'A'
+#define DIGITAL_SENSOR_PORT1 'B'
 #define DIGITAL_SENSOR_PORT2 'C' 
-#define DIGITAL_SENSOR_PORT3 'A' 
+#define DIGITAL_SENSOR_PORT3 'D' 
 
 #define LEFT_DIST_SENSOR_PORT 0 //digital sensor ports (random numbers for now)
 #define BACK_DIST_SENSOR_PORT 1
 #define RIGHT_DIST_SENSOR_PORT 2
 
 pros::ADIPneumatics tripleStateDown(DIGITAL_SENSOR_PORT3, false);
-pros::ADIPneumatics tripleStateUp(DIGITAL_SENSOR_PORT, false); //update digital sensor port
+pros::ADIPneumatics tripleStateUp(DIGITAL_SENSOR_PORT1, false); //update digital sensor port
 
 pros::ADIPneumatics wing(DIGITAL_SENSOR_PORT2,false);
 pros::ADIPneumatics matchLoad(DIGITAL_SENSOR_PORT, false);
@@ -89,18 +90,19 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+
+      {"Left Elim", leftElim},
+
+      {"Right Qual", rightQual},
+
+      {"Turn\n\nTurn 3 times.", turn_example},
+
+      {"Drive\n\nDrive forward and come back", drive_example},
       {"Skills", skills},
 
       {"Left Qual", leftQual},
 
       {"Solo AWP", soloAWP},
-
-
-
-      {"Left Elim", leftElim},
-
-
-      {"Right Qual", rightQual},
 
       {"Solo AWP", soloAWP},
 
@@ -117,9 +119,7 @@ void initialize() {
       {"Right 4 Push Matchload", right4PushMatchload},
       
       {"Right 4 Rush", right4Rush},
-
-      {"Drive\n\nDrive forward and come back", drive_example},
-      {"Turn\n\nTurn 3 times.", turn_example},
+      
       {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
       {"Drive and Turn\n\nSlow down during drive", wait_until_change_speed},
       {"Swing Turn\n\nSwing in an 'S' curve", swing_example},
@@ -333,17 +333,16 @@ void opcontrol() {
     // }
 
             if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-                tripleStateDown.retract();
-                tripleStateUp.retract();
-            }
-            else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
                 tripleStateDown.extend();
                 tripleStateUp.extend();
+            }
+            else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+                tripleStateDown.retract();
+                tripleStateUp.retract();
             }
             else{
                 tripleStateDown.retract();
                 tripleStateUp.extend();
-
             }
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
               wing.toggle();

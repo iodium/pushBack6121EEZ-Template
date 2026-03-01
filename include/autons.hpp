@@ -31,3 +31,13 @@ void match_load_procedure(int times, double wiggle_amount);
 
 double get_x(int facing, double length, double width);
 double get_y(int facing, double length, double width);
+
+void tripleStateLongGoal();
+void tripleStateStore();
+void tripleStateMidGoal();
+
+void fullIntake();
+void fullOuttake();
+void stopIntake();
+void slowOuttake();
+void midGoalIntake();

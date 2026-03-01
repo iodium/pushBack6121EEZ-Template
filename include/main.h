@@ -74,7 +74,8 @@ extern pros::ADIPneumatics matchLoad;
 extern pros::Distance rightDistanceSensor;
 extern pros::Distance leftDistanceSensor;
 extern pros::Distance backDistanceSensor;
-
+extern pros::ADIPneumatics tripleStateDown;
+extern pros::ADIPneumatics tripleStateUp;
 
 
 /**
