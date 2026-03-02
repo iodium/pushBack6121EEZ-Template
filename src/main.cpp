@@ -95,13 +95,6 @@ void initialize() {
 
       {"Left Elim", leftElim},
 
-      
-
-
-
-
-
-
       {"Turn\n\nTurn 3 times.", turn_example},
 
       {"Drive\n\nDrive forward and come back", drive_example},
