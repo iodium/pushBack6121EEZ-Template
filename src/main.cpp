@@ -100,13 +100,6 @@ void initialize() {
       {"Right Qual", rightQual},
 
 
-      
-
-
-
-
-
-
       {"Turn\n\nTurn 3 times.", turn_example},
 
 

@@ -492,27 +492,24 @@ void rightQual(){
   fullIntake(); //intake balls
   pros::delay(1000);
 
-  chassis.pid_turn_set(get_heading(-28.707, -21, -43.327, -49), 110); //turn to matchload setup
+  chassis.pid_turn_set(get_heading(-28.707, -21, -43.327, -46), 110); //turn to matchload setup
   pros::delay(600);
   stopIntake();
 
-  chassis.pid_drive_set((get_distance(-28.707, -21, -43.327, -49)) -3, 75); //drive to matchload setup
+  chassis.pid_drive_set((get_distance(-28.707, -21, -43.327, -46)), 75); //drive to matchload setup
   pros::delay(1300);
 
   chassis.pid_turn_set(270, 105); //turn to face matchload
+  matchLoad.extend(); //extend matchload
   pros::delay(425);
 
-  matchLoad.extend(); //extend matchload
   fullIntake(); //intake matchload balls
-  chassis.pid_drive_set(20.5, 65); //drive into matchload while intaking
+  chassis.pid_drive_set(20.47, 65); //drive into matchload while intaking
   pros::delay(1000);
-  match_load_procedure(2, 0.6);
-  chassis.pid_drive_set(-8, 100); //drive backwards into long goal
-  pros::delay(200);
-  chassis.pid_turn_set(265, 100); 
-  pros::delay(200);
-  chassis.pid_drive_set(-21, 100); 
-  pros::delay(400);
+  chassis.pid_drive_set(-0.25, 40); //drive back slightly to help align with long goal
+  pros::delay(600);
+  chassis.pid_drive_set(-27.69, 100); //drive backwards into long goal
+  pros::delay(600);
 
 
   slowOuttake(); //outtake a little to free up balls
@@ -530,7 +527,7 @@ void rightQual(){
   pros::delay(600);
   
   
-  chassis.pid_drive_set(9, 110); //drive to alley lane
+  chassis.pid_drive_set(8.5, 110); //drive to alley lane
   pros::delay(550);
 
   chassis.pid_turn_set(265, 105); //turn to face direction for wing
@@ -568,6 +565,9 @@ void leftElim(){
   pros::delay(425);
 
   fullIntake(); //intake matchload balls
+  chassis.pid_drive_set(18, 75); //drive into matchload while intaking
+  pros::delay(1100);
+  chassis.pid_drive_set(-0.75, 40); //drive out slightly
   chassis.pid_drive_set(19.5, 75); //drive into matchload while intaking
   pros::delay(1000);
   match_load_procedure(2, 1);
@@ -589,7 +589,7 @@ void leftElim(){
   pros::delay(600);
   
   
-  chassis.pid_drive_set(7.67, 110); //drive to alley lane
+  chassis.pid_drive_set(9, 110); //drive to alley lane
   pros::delay(550);
 
   chassis.pid_turn_set(265, 105); //turn to face direction for wing
