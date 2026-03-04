@@ -65,7 +65,6 @@ void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
 
-  pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
   // Look at your horizontal tracking wheel and decide if it's in front of the midline of your robot or behind it
   //  - change `back` to `front` if the tracking wheel is in front of the midline
@@ -90,10 +89,16 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+      {"Skills", skills},
+
+      {"Drive\n\nDrive forward and come back", drive_example},
+
+      {"Left Elim", leftElim},
+
+      {"Left Qual", leftQual},
 
       {"Right Qual", rightQual},
 
-      {"Left Elim", leftElim},
 
       
 
@@ -104,10 +109,7 @@ void initialize() {
 
       {"Turn\n\nTurn 3 times.", turn_example},
 
-      {"Drive\n\nDrive forward and come back", drive_example},
-      {"Skills", skills},
 
-      {"Left Qual", leftQual},
 
       {"Solo AWP", soloAWP},
 

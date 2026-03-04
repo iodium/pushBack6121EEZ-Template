@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "rightQual",
+    "project_name": "skills",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -426,7 +426,7 @@
     "upload_options": {
       "description": "roboticsisez.com",
       "icon": "alien",
-      "slot": 3
+      "slot": 4
     },
     "use_early_access": false
   }
