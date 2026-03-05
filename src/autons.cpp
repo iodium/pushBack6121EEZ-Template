@@ -716,23 +716,38 @@ void skills(){
   pros::delay(700);
   stopIntake(); //intake balls
   
-  chassis.pid_turn_set(get_heading(-23.134, 22.965,-12.211, 11.851)+180, 105);
-  pros::delay(600);
+  chassis.pid_turn_set(get_heading(-23.134, 22.965,-8.258,8.793)+180, 105);//turn to mid goal
+  pros::delay(700);
 
-  chassis.pid_drive_set(-1*get_distance(-23.134, 22.965,-9.917,9.558), 95);
+  chassis.pid_drive_set(-1*get_distance(-23.134, 22.965,-8.258,8.793)-1, 95); //drive into mid goal
   pros::delay(500);
   
   tripleStateMidGoal();
   midGoalIntake(); //intake balls
-  pros::delay(1000);
-  stopIntake(); //intake balls
-  chassis.pid_drive_set(get_distance(-9.917, 9.558,-47.077, 46.412), 105);
-  pros::delay(900);
+  pros::delay(1100);
+  stopIntake(); //STOP intake balls
+  tripleStateStore();
+
+  chassis.pid_drive_set(get_distance(-8.258,8.793,-47.077, 44.424), 95); //drive up to 1st matchload
+  pros::delay(1100);
   
-  chassis.pid_turn_set(get_heading(-47.077, 46.412,-58.852, 46.412), 95);
+  chassis.pid_turn_set(get_heading(-47.077, 44.424,-58.569, 44.424), 95); //turn to matchload
   setIntake(90,-90);
+
   matchLoad.extend();
+  pros::delay(700);
+  chassis.pid_drive_set(get_distance(-47.077, 44.424,-58.569,44.424), 105); //drive into matchload
+  fullIntake();
   pros::delay(500);
+  match_load_procedure_skills(2,2);
+
+  stopIntake();
+  
+  //chassis.pid_drive_set(get_distance(-57.193,46.565,-47.077, 46.412), 105); //drive into matchload
+  //pros::delay(400);
+
+
+
 
   
   
@@ -1142,7 +1157,17 @@ void match_load_procedure(int times, double wiggle_amount) {
 
   pros::delay(800 - times * 300); //wait for balls to be intaken
 }
+void match_load_procedure_skills(int times, double wiggle_amount) {
+ 
+  for (int i = 0; i < times; i++) {
+    chassis.pid_drive_set(-(wiggle_amount - 0.3), 40);
+    pros::delay(150);
+    chassis.pid_drive_set(wiggle_amount, 40);
+    pros::delay(150);
+  }
 
+  pros::delay(1500 - times * 300); //wait for balls to be intaken
+}
 /**
  * @brief returns (with double precision) x-coordinate of the center of the bot on the field
  * @brief from the perspective of red side, positive x is forward, positive y is left

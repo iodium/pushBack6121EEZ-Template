@@ -33,7 +33,7 @@ void setIntakeMotors() {
         }
         else if (
             controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) || intakeState == 1){ //score middle goal
-            setIntake(80,-80); // originally -117, -50
+            setIntake(70,-70); 
         }
         
         else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
