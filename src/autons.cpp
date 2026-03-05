@@ -10,8 +10,8 @@
 const int DRIVE_SPEED = 80;
 const int TURN_SPEED = 75;
 const int SWING_SPEED = 110;
-const int BOT_LENGTH; //set later
-const int BOT_WIDTH; //set later
+const int BOT_LENGTH = 0; //set later
+const int BOT_WIDTH = 0; //set later
 
 ///
 // Constants
@@ -707,45 +707,64 @@ void skills(){
   chassis.drive_angle_set(90); //sets initial heading to facing 0 degrees
   wing.extend();
   tripleStateStore();
-  chassis.pid_drive_set(get_distance(-45.833, 13.946, -35.298, 14.517), 105);
+  chassis.pid_drive_set(get_distance(-45.833, 13.946, -34.6, 14.917), 105);
   pros::delay(400);
 
-  chassis.pid_turn_set(get_heading(-35.298, 14.517,-23.134, 22.965), 105, true); //turn to face balls
+  chassis.pid_turn_set(get_heading(-34.6, 14.917,-23.8, 24.6), 105, true); //turn to face balls
   pros::delay(500);
 
-  chassis.pid_drive_set(get_distance(-35.298, 14.517,-23.134, 22.965), 95);
+  chassis.pid_drive_set(get_distance(-34.6, 14.917,-23.8, 24.6), 95);
   fullIntake(); //intake balls
-  pros::delay(700);
+  pros::delay(800);
   stopIntake(); //intake balls
   
-  chassis.pid_turn_set(get_heading(-23.134, 22.965,-8.258,8.793)+180, 105);//turn to mid goal
+  
+  chassis.pid_turn_set(get_heading(-23.8, 24.6,-9.3, 9.5)+180, 90);//turn to mid goal
   pros::delay(700);
 
-  chassis.pid_drive_set(-1*get_distance(-23.134, 22.965,-8.258,8.793)-1, 95); //drive into mid goal
+  chassis.pid_drive_set(-1*(get_distance(-23.8, 24.6,-9.3, 9.5)), 75); //drive into mid goal
   pros::delay(500);
-  
+
   tripleStateMidGoal();
   setIntake(100, -100);
-  pros::delay(1100);
+  pros::delay(1500);
   stopIntake(); //STOP intake balls
   tripleStateStore();
 
-  chassis.pid_drive_set(get_distance(-8.258,8.793,-47.077, 46.259), 95); //drive up to 1st matchload
+  chassis.pid_drive_set(get_distance(-9.3, 9.5,-47.077, 44.659), 95); //drive up to 1st matchload
   pros::delay(1100);
   
-  chassis.pid_turn_set(get_heading(-47.077, 46.259,-58.569, 46.259), 95); //turn to matchload
+  chassis.pid_turn_set(270, 105);
   setIntake(90,-90);
-
   matchLoad.extend();
-  pros::delay(700);
-  chassis.pid_drive_set(get_distance(-47.077, 46.259,-58.569,46.259), 105); //drive into matchload
-  fullIntake();
-  pros::delay(500);
-  match_load_procedure_skills(2,2);
 
+  pros::delay(700);
+  chassis.pid_drive_set(get_distance(-47.077, 45.259,-58.569,44.659), 105); //drive into matchload
+  fullIntake();
+  pros::delay(600);
+  match_load_procedure_skills(2,2);
+  
+  chassis.pid_drive_set(-get_distance(-47.077, 45.259,-58.569,44.659), 105); //drive out of matchload
+  pros::delay(500);
+
+  chassis.pid_turn_set(get_heading(-58.569, 44.659, -37.295, 55) + 180, 105); //turn to face point beyond long goal
+  pros::delay(500);
+
+  chassis.pid_drive_set(-get_distance(-58.569, 44.659, -37.295, 55), 80); //drive past long goal
+  pros::delay(800);
+
+  chassis.pid_turn_set(273, 105);
+  pros::delay(500);
+
+  chassis.pid_drive_set(-70, 80); //drive to other side of field
+  pros::delay(400);
   stopIntake();
-  
-  
+  pros::delay(1200);
+
+  matchLoad.retract();
+
+  chassis.pid_turn_set(180, 105); //turn to face matchload
+  pros::delay(500);
 
   //chassis.pid_drive_set(get_distance(-57.193,46.565,-47.077, 46.412), 105); //drive into matchload
   //pros::delay(400);
@@ -1121,7 +1140,7 @@ void soloAWP() {
  * @param dest_y y coord of point that bot needs to turn to
  * @return heading for bot to turn to, based on its current/desired position
  */
-float get_heading(double current_x, double current_y, double dest_x, double dest_y) {
+float get_heading(float current_x, float current_y, float dest_x, float dest_y) {
   float delta_x = dest_x - current_x;
   float delta_y = dest_y - current_y;
 
@@ -1164,13 +1183,13 @@ void match_load_procedure(int times, double wiggle_amount) {
 void match_load_procedure_skills(int times, double wiggle_amount) {
  
   for (int i = 0; i < times; i++) {
-    chassis.pid_drive_set(-(wiggle_amount - 0.3), 40);
-    pros::delay(150);
+    chassis.pid_drive_set(-(wiggle_amount), 40);
+    pros::delay(200);
     chassis.pid_drive_set(wiggle_amount, 40);
-    pros::delay(150);
+    pros::delay(200);
   }
 
-  pros::delay(1500 - times * 300); //wait for balls to be intaken
+  pros::delay(1700 - times * 300); //wait for balls to be intaken
 }
 /**
  * @brief returns (with double precision) x-coordinate of the center of the bot on the field
