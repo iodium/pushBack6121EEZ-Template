@@ -725,20 +725,20 @@ void skills(){
   pros::delay(500);
   
   tripleStateMidGoal();
-  midGoalIntake(); //intake balls
+  setIntake(100, -100);
   pros::delay(1100);
   stopIntake(); //STOP intake balls
   tripleStateStore();
 
-  chassis.pid_drive_set(get_distance(-8.258,8.793,-47.077, 44.424), 95); //drive up to 1st matchload
+  chassis.pid_drive_set(get_distance(-8.258,8.793,-47.077, 46.259), 95); //drive up to 1st matchload
   pros::delay(1100);
   
-  chassis.pid_turn_set(get_heading(-47.077, 44.424,-58.569, 44.424), 95); //turn to matchload
+  chassis.pid_turn_set(get_heading(-47.077, 46.259,-58.569, 46.259), 95); //turn to matchload
   setIntake(90,-90);
 
   matchLoad.extend();
   pros::delay(700);
-  chassis.pid_drive_set(get_distance(-47.077, 44.424,-58.569,44.424), 105); //drive into matchload
+  chassis.pid_drive_set(get_distance(-47.077, 46.259,-58.569,46.259), 105); //drive into matchload
   fullIntake();
   pros::delay(500);
   match_load_procedure_skills(2,2);
