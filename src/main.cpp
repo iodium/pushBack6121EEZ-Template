@@ -90,34 +90,16 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-
       {"Right Qual", rightQual},
-
       {"Left Elim", leftElim},
-
       {"Turn\n\nTurn 3 times.", turn_example},
-
       {"Drive\n\nDrive forward and come back", drive_example},
       {"Skills", skills},
-
       {"Left Qual", leftQual},
-
       {"Solo AWP", soloAWP},
-
       {"Solo AWP", soloAWP},
-
-
-
-
-
-
       {"Left Qual", leftQual},
-
-
-
-
       {"Right 4 Push Matchload", right4PushMatchload},
-      
       {"Right 4 Rush", right4Rush},
       
       {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
@@ -308,16 +290,12 @@ void opcontrol() {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
 
-    //chassis.opcontrol_tank();  // Tank control
     chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-    //chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
-    // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
-    // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
-    // setLBMotors();
+
+  
     setIntakeMotors(); //must use own function to set motors other than drivetrain
-    //setDriveMotors(); chassis.opcontrol_arcade_standard(...) already sets drivetrain motors
-    //pros::delay();
+    
     pros::delay(50);
 
     // . . .

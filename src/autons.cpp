@@ -10,6 +10,8 @@
 const int DRIVE_SPEED = 50;
 const int TURN_SPEED = 75;
 const int SWING_SPEED = 110;
+const int BOT_LENGTH; //set later
+const int BOT_WIDTH; //set later
 
 ///
 // Constants
@@ -1067,7 +1069,7 @@ void soloAWP() {
  * @param dest_y y coord of point that bot needs to turn to
  * @return heading for bot to turn to, based on its current/desired position
  */
-float get_heading(float current_x, float current_y, float dest_x, float dest_y) {
+float get_heading(double current_x, double current_y, double dest_x, double dest_y) {
   float delta_x = dest_x - current_x;
   float delta_y = dest_y - current_y;
 
@@ -1112,38 +1114,36 @@ void match_load_procedure(int times, double wiggle_amount) {
  * @brief returns (with double precision) x-coordinate of the center of the bot on the field
  * @brief from the perspective of red side, positive x is forward, positive y is left
  * @details uses distance sensors to calculate position based on current distance to walls
- * @param facing 1 = positive_x, 2 = positive_y, 3 = negative_x, 4 = negative_y
- * @param length length of the bot
- * @param width width of the bot
+ * @param facing 1 = +x, 2 = +y, 3 = -x, 4 = -y
  */
-double get_x(int facing, double length, double width) {
+double get_x(int facing) {
   double x;
 
   if (facing == 1) {
-    double dist = backDistanceSensor.get() / 25.4 + length / 2; //distance from wall to center of bot, converted to inches
+    double dist = backDistanceSensor.get() / 25.4 + BOT_LENGTH / 2; //distance from wall to center of bot, converted to inches
     x = dist - 70; // distance from center to edge of field is 70 inches
   }
   if (facing == 3) {
-    double dist = backDistanceSensor.get() / 25.4 + length / 2; 
+    double dist = backDistanceSensor.get() / 25.4 + BOT_LENGTH / 2; 
     x = 70 - dist;
   }
   if (facing == 2) {
-    double dist = leftDistanceSensor.get() / 25.4 + width / 2;
+    double dist = leftDistanceSensor.get() / 25.4 + BOT_WIDTH / 2;
     x = dist - 70;
   }
   if (facing == 4) {
-    double dist = rightDistanceSensor.get() / 25.4 + width / 2;
+    double dist = rightDistanceSensor.get() / 25.4 + BOT_WIDTH / 2;
     x = 70 - dist;
   }
 
   return x;
 }
 
-double get_y(int facing, double length, double width) {
+double get_y(int facing) {
   double y;
 
   if (facing == 1) {
-    double dist = leftDistanceSensor.get() / 25.4 + width / 2; //distance from wall to center of bot, converted to inches
+    double dist = leftDistanceSensor.get() / 25.4 + BOT_WIDTH / 2; //distance from wall to center of bot, converted to inches
     y = dist - 70; // distance from center to edge of field is 70 inches
   }
   return y;
