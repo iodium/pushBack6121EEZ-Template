@@ -706,31 +706,32 @@ void skills(){
   chassis.drive_angle_set(90); //sets initial heading to facing 0 degrees
   wing.extend();
   tripleStateStore();
-  chassis.pid_drive_set(get_distance(-45.833, 13.946, -34.6, 14.917), 105);
+  chassis.pid_drive_set(get_distance(-45.833, 13.946, -34.6, 13.946), 105);
   pros::delay(400);
 
-  chassis.pid_turn_set(get_heading(-34.6, 14.917,-23.8, 24.6), 105, true); //turn to face balls
+  chassis.pid_turn_set(get_heading(-34.6, 13.946,-23.091, 22.862), 105, true); //turn to face balls
   pros::delay(500);
 
-  chassis.pid_drive_set(get_distance(-34.6, 14.917,-23.8, 24.6), 95);
+  chassis.pid_drive_set(get_distance(-34.6, 14.917,-23.0, 22.862), 65);
   fullIntake(); //intake balls
   pros::delay(800);
-  stopIntake(); //intake balls
+  setIntake(50,-50);
+ //intake balls
   
   
-  chassis.pid_turn_set(get_heading(-23.8, 24.6,-9.3, 9.5)+180, 90);//turn to mid goal
+  chassis.pid_turn_set(get_heading(-23.0, 22.862,-9.3, 9.5)+180, 90);//turn to mid goal
   pros::delay(700);
 
-  chassis.pid_drive_set(-1*(get_distance(-23.8, 24.6,-9.3, 9.5)), 75); //drive into mid goal
+  chassis.pid_drive_set(-1*(get_distance(-23.0, 22.8626,-9.3, 9.5)), 75); //drive into mid goal
   pros::delay(500);
 
   tripleStateMidGoal();
-  setIntake(100, -100);
-  pros::delay(1500);
+  setIntake(127, -127);
+  pros::delay(700);
   stopIntake(); //STOP intake balls
   tripleStateStore();
 
-  chassis.pid_drive_set(get_distance(-9.3, 9.5,-47.077, 44.659), 95); //drive up to 1st matchload
+  chassis.pid_drive_set(get_distance(-9.3, 9.5,-47.077, 45.259), 95); //drive up to 1st matchload
   pros::delay(1100);
   
   chassis.pid_turn_set(270, 105);
@@ -738,32 +739,61 @@ void skills(){
   matchLoad.extend();
 
   pros::delay(700);
-  chassis.pid_drive_set(get_distance(-47.077, 45.259,-58.569,44.659), 105); //drive into matchload
+  chassis.pid_drive_set(get_distance(-47.077, 45.259,-59.5,44.659), 105); //drive into matchload
   fullIntake();
   pros::delay(600);
-  match_load_procedure_skills(2,2);
+  match_load_procedure_skills(1,1.5);
   
-  chassis.pid_drive_set(-get_distance(-47.077, 45.259,-58.569,44.659), 105); //drive out of matchload
+  chassis.pid_drive_set(-get_distance(-47.077, 45.259,-59.5,45.259), 105); //drive out of matchload
   pros::delay(500);
 
-  chassis.pid_turn_set(get_heading(-58.569, 44.659, -37.295, 55) + 180, 105); //turn to face point beyond long goal
+  chassis.pid_turn_set(get_heading(-59.5, 45.259, -37.295, 54) + 180, 105); //turn to face point beyond long goal
   pros::delay(500);
 
-  chassis.pid_drive_set(-get_distance(-58.569, 44.659, -37.295, 55), 80); //drive past long goal
+  chassis.pid_drive_set(-get_distance(-59.5, 45.259, -37.295, 52), 80); //drive past long goal
   pros::delay(800);
 
   chassis.pid_turn_set(273, 105);
   pros::delay(500);
+  setIntake(50,-50);
 
-  chassis.pid_drive_set(-70, 80); //drive to other side of field
+  chassis.pid_drive_set(-get_distance(-37.295, 52, 23.854, 52), 80); //drive to other side of field
   pros::delay(400);
-  stopIntake();
-  pros::delay(1200);
+  pros::delay(1800);
 
   matchLoad.retract();
 
-  chassis.pid_turn_set(180, 105); //turn to face matchload
+  chassis.pid_turn_set(180, 105); //turn to set up for scoring
   pros::delay(500);
+  chassis.pid_drive_set(10, 105);
+  pros::delay(500);
+  chassis.pid_turn_set(92, 105); //turn to face long goal
+  pros::delay(500);
+  chassis.pid_drive_set(-12, 105);
+  pros::delay(600);
+  tripleStateLongGoal();
+  fullIntake();
+  chassis.pid_turn_set(92, 105); //turn to face long goal
+
+  
+  pros::delay(300);
+  chassis.pid_drive_set(-20, 105);
+  pros::delay(1500);
+  tripleStateStore();
+  stopIntake();
+  chassis.pid_drive_set(get_distance(28.596,46.412, 32, 46.259), 105);
+  
+  pros::delay(300);
+  chassis.pid_turn_set(94, 85); //turn to be straight
+  matchLoad.extend();
+  pros::delay(300);
+  chassis.pid_drive_set(get_distance(32, 46.259,59,46.259), 65); //drive into 2nd matchload
+  fullIntake();
+  pros::delay(800);
+  match_load_procedure_skills(1,1.5);
+  stopIntake();
+  chassis.pid_drive_set(-get_distance(29.5, 46.259,59,46.25), 75);
+  pros::delay(800);
 
   //chassis.pid_drive_set(get_distance(-57.193,46.565,-47.077, 46.412), 105); //drive into matchload
   //pros::delay(400);
