@@ -491,7 +491,7 @@ void rightQual(){
   pros::delay(500);
 
   chassis.pid_drive_set(get_distance(-45.833, -13.946, -28.707, -21)+2, 55);
-  fullIntake(); //intake balls
+  fullIntake(); //intake balls  
   pros::delay(1000);
 
   chassis.pid_turn_set(get_heading(-28.707, -21, -43.327, -46), 110); //turn to matchload setup
@@ -505,14 +505,14 @@ void rightQual(){
   matchLoad.extend(); //extend matchload
   pros::delay(425);
 
-  fullIntake(); //intake matchload balls
+  fullIntake(); //intake matchload ballsD
   chassis.pid_drive_set(20.47, 65); //drive into matchload while intaking
   pros::delay(1000);
-  chassis.pid_drive_set(-0.25, 40); //drive back slightly to help align with long goal
-  pros::delay(600);
-  chassis.pid_drive_set(-27.69, 100); //drive backwards into long goal
+  chassis.pid_drive_set(-0.25, 40); //drive back slightly
   pros::delay(600);
 
+  chassis.pid_drive_set(-27.69, 100); //drive backwards into long goal
+  pros::delay(600);
 
   slowOuttake(); //outtake a little to free up balls
   pros::delay(250);
@@ -527,7 +527,6 @@ void rightQual(){
 
   chassis.pid_turn_set(315, 127); //turn to face wing setup
   pros::delay(600);
-  
   
   chassis.pid_drive_set(8.5, 110); //drive to alley lane
   pros::delay(550);
