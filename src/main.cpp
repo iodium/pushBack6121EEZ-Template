@@ -15,7 +15,7 @@
 #define DIGITAL_SENSOR_PORT2 'C' 
 #define DIGITAL_SENSOR_PORT3 'D' 
 
-#define LEFT_DIST_SENSOR_PORT 0 //digital sensor ports (random numbers for now)
+#define LEFT_DIST_SENSOR_PORT 4 //digital sensor ports (random numbers for now)
 #define BACK_DIST_SENSOR_PORT 1
 #define RIGHT_DIST_SENSOR_PORT 2
 
@@ -28,8 +28,8 @@ pros::ADIPneumatics matchLoad(DIGITAL_SENSOR_PORT, false);
 
 //construct distance sensors
 pros::Distance leftDistanceSensor(LEFT_DIST_SENSOR_PORT);
-pros::Distance rightDistanceSensor(RIGHT_DIST_SENSOR_PORT);
-pros::Distance backDistanceSensor(BACK_DIST_SENSOR_PORT);
+//pros::Distance rightDistanceSensor(RIGHT_DIST_SENSOR_PORT);
+//pros::Distance backDistanceSensor(BACK_DIST_SENSOR_PORT);
 
 int program = 0; // 0 = match, 1 = skills
 // Chassis constructor
