@@ -30,8 +30,8 @@ float get_distance(float current_x, float current_y, float dest_x, float dest_y)
 void match_load_procedure(int times, double wiggle_amount);
 void match_load_procedure_skills(int times, double wiggle_amount);
 
-double get_x(int facing, double length, double width);
-double get_y(int facing, double length, double width);
+double get_x(int facing);
+double get_y(int facing);
 
 void tripleStateLongGoal();
 void tripleStateStore();
