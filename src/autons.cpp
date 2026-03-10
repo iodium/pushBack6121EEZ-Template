@@ -1255,19 +1255,20 @@ void match_load_procedure_skills(int times, double wiggle_amount) {
 double get_x(int facing) {
   double x;
 
+
   if (facing == 1) {
     double dist = backDistanceSensor.get() / 25.4 + BOT_LENGTH / 2; //distance from wall to center of bot, converted to inches
     x = dist - 70; // distance from center to edge of field is 70 inches
   }
-  if (facing == 3) {
+  else if (facing == 3) {
     double dist = backDistanceSensor.get() / 25.4 + BOT_LENGTH / 2; 
     x = 70 - dist;
   }
-  if (facing == 2) {
+  else if (facing == 2) {
     double dist = leftDistanceSensor.get() / 25.4 + BOT_WIDTH / 2;
     x = dist - 70;
   }
-  if (facing == 4) {
+  else { //facing = 4
     double dist = rightDistanceSensor.get() / 25.4 + BOT_WIDTH / 2;
     x = 70 - dist;
   }
@@ -1275,12 +1276,32 @@ double get_x(int facing) {
   return x;
 }
 
+/**
+ * @brief returns (with double precision) y-coordinate of the center of the bot on the field
+ * @brief from the perspective of red side, positive x is forward, positive y is left
+ * @details uses distance sensors to calculate position based on current distance to walls
+ * @param facing 1 = +x, 2 = +y, 3 = -x, 4 = -y
+ */
 double get_y(int facing) {
   double y;
-
+  double side_dist_to_center; //distance from side distance sensor to center of bot
+  double back_dist_to_center; //distance from back distance sensor to center of bot
+  //divide values by 25.4 to convert from mm to inches
   if (facing == 1) {
-    double dist = leftDistanceSensor.get() / 25.4 + BOT_WIDTH / 2; //distance from wall to center of bot, converted to inches
-    y = dist - 70; // distance from center to edge of field is 70 inches
+    double dist = leftDistanceSensor.get() / 25.4 + side_dist_to_center; //distance from wall to center of bot, converted to inches
+    y = 70 - dist; // distance from center to edge of field is 70 inches
+  }
+  else if (facing == 3) {
+    double dist = leftDistanceSensor.get() / 25.4 + side_dist_to_center;
+    y = dist - 70;
+  }
+  else if (facing == 2) {
+    double dist = backDistanceSensor.get() / 25.4 + back_dist_to_center;
+    y = dist - 70;
+  }
+  else { //facing = 4
+    double dist = backDistanceSensor.get() / 25.4 + back_dist_to_center;
+    y = 70 - dist;
   }
   return y;
 }
