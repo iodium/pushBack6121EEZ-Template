@@ -1134,7 +1134,6 @@ void skills(){
   // matchLoad.retract();
 }
 
-
 void soloAWP() {
 //   chassis.drive_angle_set(180_deg); //sets initial heading to facing 180 degrees
 //   wing.extend();
@@ -1423,15 +1422,12 @@ void fullIntake() {
 void fullOuttake() {
   setIntake(-127, 127);
 }
-
 void slowOuttake() {
   setIntake(-40, 40);
 }
-
 void stopIntake() {
   setIntake(0, 0);
 }
-
 void midGoalIntake() {
   setIntake(80,-80);
 }
