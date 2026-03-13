@@ -89,12 +89,12 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+      {"Skills", skills},
       
       {"Right Qual", rightQual},
       
       {"Left Qual", leftQual},
 
-      {"Skills", skills},
       {"Solo AWP", soloAWP},
       {"Skills", skills},
 
