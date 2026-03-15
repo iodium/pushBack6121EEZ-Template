@@ -412,7 +412,7 @@ void leftQual(){
   chassis.pid_turn_set(270_deg, 105); //turn to face match load
   pros::delay(450);
 
-  chassis.pid_drive_set(11.2, 75); //drive into matchload
+  chassis.pid_drive_set(10.8, 75); //drive into matchload
   fullIntake();
   pros::delay(950); //wait for balls to be intaken
 
@@ -430,15 +430,15 @@ void leftQual(){
   chassis.pid_turn_set(168, 105); // turn to face next set of balls while at long goal
   pros::delay(800);
 
-  chassis.pid_drive_set(13.4, 60); //move forward into next set of balls
+  chassis.pid_drive_set(15.5, 60); //move forward into next set of balls
   tripleStateStore();
   fullIntake();
-  pros::delay(400);
+  pros::delay(700);
   
-  chassis.pid_turn_set(get_heading(-23.8, 21.729, -12.28, 9.194) + 180, 115); //turn back to mid goal
+  chassis.pid_turn_set(get_heading(-23.8, 19.729, -9.982,7.602) + 180, 115); //turn back to mid goal
   pros::delay(600);
 
-  chassis.pid_drive_set(-1 * (get_distance(-23.8, 21.729, -12.28, 9.194)), 65); //drive into mid goal backwards
+  chassis.pid_drive_set(-1 * (get_distance(-23.8, 19.729, -9.982, 7.602)), 65); //drive into mid goal backwards
   stopIntake();
   pros::delay(600);
 
@@ -453,14 +453,14 @@ void leftQual(){
   // chassis.pid_drive_set(get_distance(-9.882, 10.276,-33.881, 38), 85); //drive to set up wing
   // pros::delay(1000);
   
-  chassis.pid_drive_set(37, 85); //drive to set up wing
+  chassis.pid_drive_set(40, 85); //drive to set up wing
   pros::delay(1000);
 
   chassis.pid_turn_set(91, 105); //turn to be parrallel to long goal
   wing.retract(); //put wing down
   pros::delay(500);
 
-  chassis.pid_drive_set(23, 127); //drive forward and descore
+  chassis.pid_drive_set(33, 127); //drive forward and descore
 
 
   //------------------------------------vvv old code vvv --------------------------------------------
@@ -530,13 +530,13 @@ void rightQual(){
 
   chassis.pid_turn_set(270, 105); //turn to face matchload
   matchLoad.extend(); //extend matchload
-  pros::delay(200);
+  pros::delay(400);
 
   fullIntake(); //intake matchload balls
-  chassis.pid_drive_set(20, 75); //drive into matchload while intaking
+  chassis.pid_drive_set(20.5, 75); //drive into matchload while intaking
   pros::delay(800);
   chassis.pid_drive_set(-0.25, 40); //drive back slightly
-  pros::delay(550);
+  pros::delay(450);
 
   chassis.pid_drive_set(-27.69, 110); //drive backwards into long goal
   pros::delay(600);
@@ -555,15 +555,15 @@ void rightQual(){
   chassis.pid_turn_set(315, 127); //turn to face wing setup
   pros::delay(500);
   
-  chassis.pid_drive_set(9, 127); //drive to alley lane
+  chassis.pid_drive_set(12, 127); //drive to alley lane
   chassis.pid_wait();
 
   chassis.pid_turn_set(270, 105); //turn to face direction for wing
-  pros::delay(300);
+  pros::delay(400);
 
   wing.retract(); //put wing down
  
-  chassis.pid_drive_set(-20, 127); //drive into alley and wing
+  chassis.pid_drive_set(-23, 127); //drive into alley and wing
 
   chassis.pid_wait();
 }
@@ -729,6 +729,283 @@ void right4PushMatchload() {
   // chassis.pid_wait();
 }
 
+/**
+ * @brief skills for stage field
+ */
+void stageSkills() {
+  chassis.drive_angle_set(90); //sets initial heading to facing 0 degrees
+  wing.extend();
+  tripleStateStore();
+
+  chassis.pid_drive_set(get_distance(-45.833, 13.946, -34.6, 13.946), 105);
+  pros::delay(400);
+
+  chassis.pid_turn_set(get_heading(-34.6, 13.946,-22.8, 24.4), 105, true); //turn to face balls
+  pros::delay(500);
+ 
+  chassis.pid_drive_set(get_distance(-34.6, 14.917,-22.8, 24.4), 65);
+  fullIntake(); //intake balls
+  pros::delay(500);
+  
+  stopIntake();
+  pros::delay(300);
+ //intake balls
+  
+  
+  chassis.pid_turn_set(get_heading(-22.8, 24.4,-9.882, 10.276)+180, 105);//turn to mid goal
+  pros::delay(500);
+
+  chassis.pid_drive_set(-1*(get_distance(-22.8, 24.4,-9.882, 10.276) ), 75); //drive into mid goal
+  chassis.pid_wait();
+
+  tripleStateMidGoal();
+  setIntake(70, -70);
+  pros::delay(1200);
+  // stopIntake(); //STOP intake balls
+  // tripleStateStore();
+
+  chassis.pid_drive_set(get_distance(-9.882, 10.276,-46.43, 41), 95); //drive up to 1st matchload
+  pros::delay(300);
+  stopIntake(); //STOP intake balls
+  tripleStateStore();
+  pros::delay(800);
+
+
+  chassis.pid_turn_set(270, 105);
+  matchLoad.extend();
+
+  pros::delay(500);
+  chassis.pid_drive_set(13.5, 70); //drive into matchload
+  fullIntake();
+  pros::delay(600);
+  pros::delay(1500);
+  chassis.pid_drive_set(-13, 105); //drive out of matchload
+  pros::delay(500);
+
+  chassis.pid_turn_set(get_heading(-46.43, 41.5, -37.243, 55.834) + 180, 105); //turn to face point beyond long goal
+  pros::delay(500);
+
+  chassis.pid_drive_set(-get_distance(-46.43, 41.5, -37.243, 55.834)+2, 120); //drive past long goal
+  pros::delay(500);
+
+  chassis.pid_turn_set(270, 105);
+  pros::delay(500);
+  stopIntake();
+  setIntake(80,-80);
+
+  chassis.pid_drive_set(-get_distance(-37.243, 55.834, 38.312, 55.834), 115); //drive to other side of field
+  pros::delay(1500);
+
+  matchLoad.retract();
+
+  chassis.pid_turn_set(180, 105); //turn to set up for scoring
+  pros::delay(500);
+  chassis.pid_drive_set(9.75, 115); // + 1, drive perpendicular to long
+  pros::delay(500);
+  chassis.pid_turn_set(90, 105); //turn to face long goal
+  pros::delay(500);
+  chassis.pid_drive_set(-14, 85);
+  pros::delay(600);
+  tripleStateLongGoal();
+  fullIntake();
+  chassis.pid_turn_set(90, 105); //turn to face long goal
+
+  
+  pros::delay(400);
+  chassis.pid_drive_set(-20, 105);
+  pros::delay(1800);//score
+  tripleStateStore();
+  stopIntake();
+  chassis.pid_drive_set(get_distance(28.596,46.412, 32, 46.259), 105);
+  
+  pros::delay(300);
+  chassis.pid_turn_set(90, 85); //turn to be straight
+  matchLoad.extend();
+  pros::delay(300);
+  chassis.pid_drive_set(get_distance(32, 46.259,59,46.259), 60); //drive into 2nd matchload
+  fullIntake();
+  pros::delay(800);
+  pros::delay(1900);  
+  stopIntake();
+  chassis.pid_drive_set(-get_distance(29.5, 46.259,59,46.25), 100);
+  pros::delay(650);
+  tripleStateLongGoal();
+  fullIntake();
+  pros::delay(2350);//score
+  tripleStateStore();
+  stopIntake();
+
+  // removed hood push
+  chassis.pid_drive_set(6, 85); // hood push start
+  pros::delay(400); // idk hood wait
+  chassis.pid_drive_set(-6, 105); // hood push end
+  pros::delay(400); // idk hood wait
+
+  matchLoad.retract();
+  chassis.pid_drive_set(get_distance(28.36, 46.25,47.451,46.25), 110);
+  pros::delay(500);
+  chassis.pid_turn_set(get_heading(47.451,46.25,62.698,23.449), 105); //turn to point beyond wall
+  pros::delay(450);
+  chassis.pid_drive_set(get_distance(47.451,46.25,62.698,23.449)-11, 105); //drive into wall
+  pros::delay(600);
+  // chassis.pid_swing_set(ez::LEFT_SWING, 180, 90);
+  // pros::delay(500);
+  chassis.pid_swing_set(ez::LEFT_SWING, 177, 90, 50);
+
+  pros::delay(700);
+  chassis.pid_drive_set(8,60); //uhhh
+  pros::delay(600);
+
+  chassis.pid_drive_set(66, 65); //barrier cross changed 70->85, 55 -> 48
+  //changed, go all the way to matchload
+  fullIntake();
+  pros::delay(3200);
+
+  //matchLoad.extend();
+  // pros::delay(800);
+  // chassis.pid_swing_set(ez::LEFT_SWING, 270, 100, 5);
+
+  // pros::delay(250);
+  // chassis.pid_drive_set(-10, 80);
+  // pros::delay(500);
+
+  chassis.pid_swing_set(ez::RIGHT_SWING, 270, 90, -40); //turn to put back to wall
+  pros::delay(1000);
+
+  chassis.pid_drive_set(-10, 55); //keep driving back into wall;
+  pros::delay(500);
+  matchLoad.extend();
+  double distance_reset_y = get_y(1);
+  chassis.drive_angle_set(270); //sets current heading to facing 270 degrees
+
+  chassis.pid_swing_set(ez::LEFT_SWING, get_heading(63.372,distance_reset_y,20,-23.015), 100);
+  pros::delay(500);
+  chassis.pid_drive_set(get_distance(58.372,distance_reset_y,20,-23.015), 100); //clear balls in front of mid goal
+  chassis.pid_wait();
+  chassis.pid_turn_set(get_heading(20,-23.015,7.75,-8)+176.5, 100); //turn to face back to mid goal
+  stopIntake();
+
+  pros::delay(500);
+  chassis.pid_drive_set(-(get_distance(20,-23.015,7.75,-8) + 2.6), 100); // drive into mid goal
+  chassis.pid_wait();
+  
+
+  tripleStateMidGoal();
+  midGoalIntake();
+  setIntake(70,-70);
+  pros::delay(1200);
+  setIntake(55, -55);
+  pros::delay(1600);
+  stopIntake();
+  chassis.pid_drive_set(-0.5, 40); //drive ba ckward slightly to nudge blocks in further
+  pros::delay(600);
+
+  chassis.pid_turn_set(get_heading(8, -8, 43, -41), 100); //turn to face setup for matchload
+  chassis.pid_drive_set(get_distance(8, -8, 43, -41), 110); //drive to matchload setup)
+  pros::delay(1000);
+  tripleStateStore();
+
+  //3rd matchload:
+
+  chassis.pid_turn_set(90, 105); //turn to face matchload
+  matchLoad.extend(); 
+  pros::delay(500);
+
+  chassis.pid_drive_set(12, 65); //drive into matchload while intaking
+  fullIntake();
+  pros::delay(2700);  
+
+  chassis.pid_drive_set(-11, 105); //drive out of matchload while intaking
+  pros::delay(500);
+  stopIntake();
+
+  chassis.pid_turn_set(get_heading(43, -42, 34.243, -53.834) + 180, 105); //turn to face point beyond long goal
+  pros::delay(500);
+
+  chassis.pid_drive_set(-get_distance(43, -42, 34.243, -53.834), 105); //drive past long goal
+  pros::delay(550);
+
+  chassis.pid_turn_set(90, 105);
+  pros::delay(500);
+  stopIntake();
+  setIntake(50,-50);
+
+  //**maybe make faster */
+  chassis.pid_drive_set(-get_distance(34.243, -53.834, -38.312, -53.834), 115); //drive to other side of field
+  pros::delay(1650);
+
+  matchLoad.retract();
+
+  chassis.pid_turn_set(0, 105); //turn to set up for scoring
+  pros::delay(400);
+  chassis.pid_drive_set(10, 105); // + 1
+  pros::delay(450);
+
+  
+  chassis.pid_turn_set(270, 105); //turn to face long goal
+  pros::delay(400);
+  chassis.pid_drive_set(-15, 85);
+  pros::delay(550);
+  tripleStateLongGoal();
+  fullIntake();
+  
+  pros::delay(300);
+  chassis.pid_drive_set(-20, 10);
+  pros::delay(1800);//score
+  tripleStateStore();
+  stopIntake();
+
+  chassis.pid_drive_set(get_distance(-28.596,-46.412, -32, -46.259), 105);
+  
+  pros::delay(300);
+  chassis.pid_turn_set(270, 85); //turn to be straight
+  matchLoad.extend();
+  pros::delay(300);
+  chassis.pid_drive_set(get_distance(-32, -46.259, -59, -46.259), 60); //drive into 4th matchload
+  fullIntake();
+  pros::delay(800);
+  pros::delay(1900);  
+  stopIntake();
+  chassis.pid_drive_set(-get_distance(-29.5, -46.259, -59, -46.25)-2, 90);
+  pros::delay(800);
+  tripleStateLongGoal();
+  fullIntake();
+  chassis.pid_drive_set(-40, 20);
+
+  pros::delay(2700);//score
+  tripleStateStore();
+  stopIntake();
+  matchLoad.retract();
+  chassis.pid_drive_set(5, 85); // hood push start
+  pros::delay(400);
+
+  chassis.pid_drive_set(-6, 105); // hood push end
+  pros::delay(300);
+  chassis.drive_angle_set(270);
+  chassis.pid_drive_set(get_distance(-28.36, -46.25, -47.451, -46.25), 95);
+  pros::delay(600);
+  chassis.pid_turn_set(get_heading(-47.451,-46.25,-62.698,-23.449), 75); //turn to point beyond wall
+  pros::delay(500);
+  chassis.pid_drive_set(get_distance(-47.451,-46.25,-62.698,-23.449)-10, 75); //drive into wall
+  pros::delay(600);
+
+ chassis.pid_swing_set(ez::LEFT_SWING, 0, 90, 50);
+
+  pros::delay(750);
+  chassis.pid_drive_set(30,60); //uhhh
+  pros::delay(600);
+
+  chassis.pid_drive_set(16, 60); //park
+  fullIntake();
+  pros::delay(1000);
+  //matchLoad.extend();
+  pros::delay(1000);
+}
+
+/**
+ * @brief skills code
+ *
+*/
 void skills(){
   chassis.drive_angle_set(90); //sets initial heading to facing 0 degrees
   wing.extend();
@@ -808,7 +1085,7 @@ void skills(){
   chassis.pid_turn_set(90, 105); //turn to face long goal
 
   
-  pros::delay(300);
+  pros::delay(400);
   chassis.pid_drive_set(-20, 105);
   pros::delay(1800);//score
   tripleStateStore();
@@ -828,12 +1105,12 @@ void skills(){
   pros::delay(650);
   tripleStateLongGoal();
   fullIntake();
-  pros::delay(2500);//score
+  pros::delay(2350);//score
   tripleStateStore();
   stopIntake();
 
   // removed hood push
-  chassis.pid_drive_set(6, 105); // hood push start
+  chassis.pid_drive_set(6, 85); // hood push start
   pros::delay(400); // idk hood wait
   chassis.pid_drive_set(-6, 105); // hood push end
   pros::delay(400); // idk hood wait
@@ -877,28 +1154,28 @@ void skills(){
 
   chassis.pid_swing_set(ez::LEFT_SWING, get_heading(63.372,distance_reset_y,20,-23.015), 100);
   pros::delay(500);
-  chassis.pid_drive_set(get_distance(58.372,distance_reset_y,20,-23.015), 100);
+  chassis.pid_drive_set(get_distance(58.372,distance_reset_y,20,-23.015), 100); //clear balls in front of mid goal
   chassis.pid_wait();
-  chassis.pid_turn_set(get_heading(20,-23.015,8,-8)+176.5, 100);
+  chassis.pid_turn_set(get_heading(20,-23.015,8,-8)+176.5, 100); //turn to face back to mid goal
   stopIntake();
 
   pros::delay(500);
-  chassis.pid_drive_set(-(get_distance(20,-23.015,8,-8) + 2.1), 100); // drive into mid goal
+  chassis.pid_drive_set(-(get_distance(20,-23.015,8,-8) + 2.6), 100); // drive into mid goal
   chassis.pid_wait();
   
 
   tripleStateMidGoal();
   midGoalIntake();
   setIntake(70,-70);
-  pros::delay(900);
-  setIntake(50, -50);
-  pros::delay(2000);
+  pros::delay(1200);
+  setIntake(55, -55);
+  pros::delay(1600);
   stopIntake();
   chassis.pid_drive_set(-0.5, 40); //drive ba ckward slightly to nudge blocks in further
   pros::delay(600);
 
   chassis.pid_turn_set(get_heading(8, -8, 43, -41), 100); //turn to face setup for matchload
-  chassis.pid_drive_set(get_distance(8, -8, 43, -41), 110); //drive to matchload setup)
+  chassis.pid_drive_set(get_distance(8, -8, 43, -41)+0.5, 110); //drive to matchload setup)
   pros::delay(1000);
   tripleStateStore();
 
@@ -908,7 +1185,7 @@ void skills(){
   matchLoad.extend(); 
   pros::delay(500);
 
-  chassis.pid_drive_set(12, 65); //drive into matchload while intaking
+  chassis.pid_drive_set(12.4, 65); //drive into matchload while intaking
   fullIntake();
   pros::delay(2700);  
 
@@ -958,7 +1235,7 @@ void skills(){
   chassis.pid_turn_set(270, 85); //turn to be straight
   matchLoad.extend();
   pros::delay(300);
-  chassis.pid_drive_set(get_distance(-32, -46.259, -59, -46.259), 65); //drive into 4th matchload
+  chassis.pid_drive_set(get_distance(-32, -46.259, -59, -46.259), 60); //drive into 4th matchload
   fullIntake();
   pros::delay(800);
   pros::delay(1900);  
@@ -973,8 +1250,8 @@ void skills(){
   tripleStateStore();
   stopIntake();
   matchLoad.retract();
-  chassis.pid_drive_set(5, 105); // hood push start
-  pros::delay(300);
+  chassis.pid_drive_set(5, 85); // hood push start
+  pros::delay(400);
 
   chassis.pid_drive_set(-6, 105); // hood push end
   pros::delay(300);
@@ -1013,7 +1290,7 @@ void soloAWP() {
 
   chassis.pid_drive_set(12, 75); //drive into matchload
   fullIntake();
-  pros::delay(1000); //wait for balls to be intaken
+  pros::delay(950); //wait for balls to be intaken
 
   chassis.pid_drive_set(-33, 80); //move backwards into long goal
   pros::delay(700); //wait a bit before retracting matchload
@@ -1039,10 +1316,11 @@ void soloAWP() {
 
   chassis.pid_drive_set(46, 105); //move forward into next set of balls
   pros::delay(900);
-  matchLoad.extend(); //extend match load to trap balls
 
   pros::delay(200);
   setIntake(0, 0); //stop intaking
+  matchLoad.extend(); //extend match load to trap balls
+
 
   chassis.pid_turn_set(get_heading(-22.331, 19.883, -48.43, 50), 115); // turn to set up for left long goal
   pros::delay(350);
@@ -1053,29 +1331,29 @@ void soloAWP() {
   chassis.pid_turn_set(270, 105); //turn to face back to left long goal
   pros::delay(400);
 
-  chassis.pid_drive_set(-18, 95); //drive backwards into long goal
-  pros::delay(400);
+  chassis.pid_drive_set(-19, 95); //drive backwards into long goal
+  pros::delay(500);
   
   tripleStateLongGoal();
   fullIntake();
   chassis.pid_drive_set(-20, 20);
-  pros::delay(900);//score
+  pros::delay(1450);//score
   stopIntake();
   tripleStateStore();
 
-  chassis.pid_drive_set(29.67, 75); //drive into left matchload
+  chassis.pid_drive_set(30.2, 75); //drive into left matchload
   fullIntake();
-  pros::delay(1700);
+  pros::delay(1300);
 
   chassis.pid_drive_set(-11, 90);
   pros::delay(600);
 
   matchLoad.retract();
 
-  chassis.pid_turn_set(get_heading(-48.164, 45, -10.5, 10) + 180, 105);
+  chassis.pid_turn_set(get_heading(-48.164, 45, -9.5, 7.5) + 180, 105);
   pros::delay(500);
 
-  chassis.pid_drive_set(-get_distance(-48.164, 45, -10.5, 10), 100);
+  chassis.pid_drive_set(-get_distance(-48.164, 45, -9.5, 7.5), 100);
   pros::delay(1100);
 
   tripleStateMidGoal();
@@ -1189,7 +1467,176 @@ void soloAWP() {
   // hood.extend();
   // setIntake(-127, 127);
 }
+void soloAWPYellow() {
+  chassis.drive_angle_set(180_deg); //sets initial heading to facing 180 degrees
+  wing.extend();
+  tripleStateStore();
 
+  chassis.pid_drive_set(32.8, 80); //drive till in front of match load
+  pros::delay(1000);
+  
+  matchLoad.extend();
+  chassis.pid_turn_set(270_deg, 105); //turn to face match load
+  pros::delay(450);
+
+  chassis.pid_drive_set(12, 75); //drive into matchload
+  fullIntake();
+  pros::delay(950); //wait for balls to be intaken
+
+  chassis.pid_drive_set(-33, 80); //move backwards into long goal
+  pros::delay(700); //wait a bit before retracting matchload
+  matchLoad.retract(); //retract match load 
+  pros::delay(150);
+
+  tripleStateLongGoal();
+
+  fullIntake();
+  pros::delay(1050); //wait for balls to be scored
+  stopIntake();
+
+  chassis.pid_turn_set(10, 105); // turn to face next set of balls while at long goal
+  pros::delay(700);
+
+  chassis.pid_drive_set(15, 75); //move forward into next set of balls
+  tripleStateStore();
+  fullIntake();
+  pros::delay(400);
+
+  chassis.pid_turn_set(0, 105); //turn to face next set of balls on left side of field
+  pros::delay(100);
+
+  chassis.pid_drive_set(46, 105); //move forward into next set of balls
+  pros::delay(900);
+
+  pros::delay(200);
+  setIntake(0, 0); //stop intaking
+  matchLoad.extend(); //extend match load to trap balls
+
+
+  chassis.pid_turn_set(get_heading(-22.331, 19.883, -48.43, 50), 115); // turn to set up for left long goal
+  pros::delay(350);
+
+  chassis.pid_drive_set(get_distance(-22.331, 19.883, -48.43, 50), 95);
+  pros::delay(1150);
+
+  chassis.pid_turn_set(270, 105); //turn to face back to left long goal
+  pros::delay(400);
+
+  chassis.pid_drive_set(-19, 95); //drive backwards into long goal
+  pros::delay(500);
+  
+  tripleStateLongGoal();
+  fullIntake();
+  chassis.pid_drive_set(-20, 20);
+  pros::delay(1450);//score
+  stopIntake();
+  tripleStateStore();
+
+  chassis.pid_drive_set(30.2, 75); //drive into left matchload
+  fullIntake();
+  pros::delay(1300);
+
+  chassis.pid_drive_set(-11, 90);
+  pros::delay(600);
+
+  matchLoad.retract();
+
+  chassis.pid_turn_set(get_heading(-48.164, 45, -9.5, 7.5) + 180, 105);
+  pros::delay(500);
+
+  chassis.pid_drive_set(-get_distance(-48.164, 45, -9.5, 7.5), 100);
+  pros::delay(1100);
+
+  tripleStateMidGoal();
+  midGoalIntake();
+
+}
+void soloAWPPurple() {
+  chassis.drive_angle_set(180_deg); //sets initial heading to facing 180 degrees
+  wing.extend();
+  tripleStateStore();
+
+  chassis.pid_drive_set(32.8, 80); //drive till in front of match load
+  pros::delay(1000);
+  
+  matchLoad.extend();
+  chassis.pid_turn_set(270_deg, 105); //turn to face match load
+  pros::delay(450);
+
+  chassis.pid_drive_set(12, 75); //drive into matchload
+  fullIntake();
+  pros::delay(900); //wait for balls to be intaken
+
+  chassis.pid_drive_set(-33, 80); //move backwards into long goal
+  pros::delay(700); //wait a bit before retracting matchload
+  matchLoad.retract(); //retract match load 
+  pros::delay(150);
+
+  tripleStateLongGoal();
+
+  fullIntake();
+  pros::delay(1050); //wait for balls to be scored
+  stopIntake();
+
+  chassis.pid_turn_set(10, 105); // turn to face next set of balls while at long goal
+  pros::delay(700);
+
+  chassis.pid_drive_set(15, 75); //move forward into next set of balls
+  tripleStateStore();
+  fullIntake();
+  pros::delay(400);
+
+  chassis.pid_turn_set(0, 105); //turn to face next set of balls on left side of field
+  pros::delay(100);
+
+  chassis.pid_drive_set(46, 105); //move forward into next set of balls
+  pros::delay(900);
+
+  pros::delay(200);
+  setIntake(0, 0); //stop intaking
+  matchLoad.extend(); //extend match load to trap balls
+
+
+  chassis.pid_turn_set(get_heading(-22.331, 19.883, -48.43, 50), 115); // turn to set up for left long goal
+  pros::delay(350);
+
+  chassis.pid_drive_set(get_distance(-22.331, 19.883, -48.43, 50), 95);
+  pros::delay(1150);
+
+  chassis.pid_turn_set(270, 105); //turn to face back to left long goal
+  pros::delay(400);
+
+  chassis.pid_drive_set(-19, 95); //drive backwards into long goal
+  pros::delay(500);
+  
+  tripleStateLongGoal();
+  fullIntake();
+  chassis.pid_drive_set(-20, 20);
+  pros::delay(1450);//score
+  stopIntake();
+  tripleStateStore();
+
+  chassis.pid_drive_set(30.2, 65); //drive into left matchload
+  fullIntake();
+  pros::delay(1400);
+
+  chassis.pid_drive_set(-11, 90);
+  pros::delay(600);
+
+  matchLoad.retract();
+
+  chassis.pid_turn_set(get_heading(-48.164, 45, -11.5, 7.5) + 180, 105);
+  pros::delay(500);
+
+  chassis.pid_drive_set(-get_distance(-48.164, 45, -10.5, 7.5)-1, 100);
+  pros::delay(1100);
+
+  tripleStateMidGoal();
+  midGoalIntake();
+
+}
+/**
+ 
 /**
  * @brief returns heading that bot needs to turn to to face a given point
  * @note dest_x - current_x (or change in x) cannot equal 0

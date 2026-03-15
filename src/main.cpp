@@ -89,16 +89,31 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Solo AWP", soloAWP},
-  
+      {"Solo AWP Purple", soloAWPPurple},
+
+      {"Solo AWP Yellow", soloAWPYellow},
+
+      {"Skills", skills},
+
       {"Left Qual", leftQual},
 
-      {"Skills", skills},
-      
       {"Right Qual", rightQual},
+
+       {"Solo AWP", soloAWP},
+
+
+
+      {"stageSkills", stageSkills},
+  
+
+   
+
+
+  
+
+      
       
 
-      {"Skills", skills},
 
       {"Turn\n\nTurn 3 times.", turn_example},
 
@@ -349,6 +364,9 @@ void opcontrol() {
             }
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
                 intakeState = 0;
+            }
+            if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
+                skills();
             }
     
     pros::delay(20);
