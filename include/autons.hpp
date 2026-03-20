@@ -1,7 +1,7 @@
 #pragma once
 
 void default_constants();
-
+struct Particle;
 void drive_example();
 void turn_example();
 void drive_and_turn();
@@ -26,6 +26,7 @@ void skills();
 void soloAWP();
 void soloAWPYellow();
 void soloAWPPurple();
+void rightQualPurple();
 void stageSkills();
 
 float get_heading(float current_x, float current_y, float dest_x, float dest_y);
@@ -45,3 +46,6 @@ void fullOuttake();
 void stopIntake();
 void slowOuttake();
 void midGoalIntake();
+void update(double dx, double dy, double dtheta);
+double randomGaussian(double mean, double standard_dev);
+void weighting(double actualDistance);

@@ -1,6 +1,15 @@
 #include "main.h"
 #include <cmath>
-
+#include <vector>
+#include <random>
+struct Particle {
+  double x;
+  double y;
+  double theta;
+  double weight;
+};
+std::vector<Particle> particles;
+std::default_random_engine randy(static_cast<unsigned>(std::time(nullptr)));
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
@@ -398,9 +407,11 @@ void measure_offsets() {
 //1 = outtake (full)
 //2 = intake & score
 //0 = off
+/**
+ * @brief left qual
+ */
 
 void leftQual(){
-
   chassis.drive_angle_set(0_deg); //sets initial heading to facing 0 degrees
   wing.extend();
   tripleStateStore();
@@ -412,7 +423,7 @@ void leftQual(){
   chassis.pid_turn_set(270_deg, 105); //turn to face match load
   pros::delay(450);
 
-  chassis.pid_drive_set(10.8, 75); //drive into matchload
+  chassis.pid_drive_set(11.3, 75); //drive into matchload
   fullIntake();
   pros::delay(950); //wait for balls to be intaken
 
@@ -453,7 +464,7 @@ void leftQual(){
   // chassis.pid_drive_set(get_distance(-9.882, 10.276,-33.881, 38), 85); //drive to set up wing
   // pros::delay(1000);
   
-  chassis.pid_drive_set(40, 85); //drive to set up wing
+  chassis.pid_drive_set(40.5, 85); //drive to set up wing
   pros::delay(1000);
 
   chassis.pid_turn_set(91, 105); //turn to be parrallel to long goal
@@ -567,7 +578,69 @@ void rightQual(){
 
   chassis.pid_wait();
 }
+void rightQualPurple(){
+  chassis.drive_angle_set(90_deg); //sets initial heading to facing 90 degrees
+  wing.extend();
+  tripleStateStore();
 
+  chassis.pid_turn_set(get_heading(-45.833, -13.946, -28.707, -21), 127, true); //turn to face balls
+  pros::delay(500);
+
+  chassis.pid_drive_set(get_distance(-45.833, -13.946, -28.707, -21)+2, 90);
+  fullIntake(); //intake balls  
+  pros::delay(400);
+  matchLoad.extend(); //extend to trap balls
+  pros::delay(400);
+
+  chassis.pid_turn_set(get_heading(-28.707, -21, -43.327, -45.5), 110); //turn to matchload setup
+  pros::delay(600);
+  stopIntake();
+
+  // chassis.pid_drive_set(get_distance(-28.707, -21, -43.327, -45.5), 90); //drive to matchload setup
+  // pros::delay(800);
+
+  chassis.pid_drive_set(28, 90); //drive to matchload setup
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(270, 105); //turn to face matchload
+  matchLoad.extend(); //extend matchload
+  pros::delay(400);
+
+  fullIntake(); //intake matchload balls
+  chassis.pid_drive_set(20.8, 65); //drive into matchload while intaking
+  pros::delay(900);
+  chassis.pid_drive_set(-0.25, 40); //drive back slightly
+  pros::delay(450);
+
+  chassis.pid_drive_set(-27.4, 110); //drive backwards into long goal
+  pros::delay(600);
+
+  slowOuttake(); //outtake a little to free up balls
+  pros::delay(250);
+  tripleStateLongGoal();
+  fullIntake(); //score
+
+  matchLoad.retract(); //retract matchload 
+  chassis.pid_drive_set(-20, 50); //keep wheels driving back to help score
+
+  pros::delay(1800); //wait for balls to be scored
+  stopIntake();
+
+  chassis.pid_turn_set(315, 127); //turn to face wing setup
+  pros::delay(500);
+  
+  chassis.pid_drive_set(12.4, 127); //drive to alley lane
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(270, 105); //turn to face direction for wing
+  pros::delay(400);
+
+  wing.retract(); //put wing down
+ 
+  chassis.pid_drive_set(-23, 127); //drive into alley and wing
+
+  chassis.pid_wait();
+}
 void leftElim(){
   chassis.drive_angle_set(90_deg); //sets initial heading to facing 90 degrees
   wing.extend();
@@ -1775,4 +1848,42 @@ void stopIntake() {
 }
 void midGoalIntake() {
   setIntake(80,-80);
+}
+void update(double dx, double dy, double dtheta) {
+  for (auto &p : particles) {
+    double noise_x = randomGaussian(0, 0.5);  //noise to simulate variance, tune these values
+    double noise_y = randomGaussian(0, 0.5);
+    double noise_theta = randomGaussian(0, 0.1);
+
+    p.x += (noise_x +dx);
+    p.y += (noise_y +dy);
+    p.theta += (noise_theta +dtheta); 
+    //update all variables for each particle ^^
+
+  }
+  
+} 
+double getMapDistance(double x, double y, double theta) { //approximation, since we dont have ray casting
+  double distances[4];
+  distances[0] =abs((x-72)/cos(theta));
+  distances[1] =abs((x+72)/cos(theta));
+  distances[2] =abs((y-72)/sin(theta));
+
+  distances[3] =abs((y+72)/sin(theta));
+  double min = distances[0];
+  for (int i = 0; i < 4; i++) {
+    if (min > distances[i]) min = distances[i];
+  }
+  return min;
+}
+void weighting(double actualDistance) {
+  double totalWeight = 0;
+  for (auto &p: particles) { //for every particle
+    double expected = getMapDistance(p.x, p.y, p.theta);
+  }
+}
+
+double randomGaussian(double mean, double standard_dev) { //normal distribution
+  static std::normal_distribution<double> distribution; //initialize a static distribution
+  return std::normal_distribution<double>(mean, standard_dev)(randy); //input mean and standard deviation with the engine
 }
