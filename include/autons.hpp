@@ -49,3 +49,4 @@ void midGoalIntake();
 void update(double dx, double dy, double dtheta);
 double randomGaussian(double mean, double standard_dev);
 void weighting(double actualDistance);
+double getMapDistance(double x, double y, double theta);
