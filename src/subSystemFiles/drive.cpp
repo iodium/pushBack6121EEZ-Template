@@ -12,8 +12,8 @@ void setDrive(int leftFront, int leftBack,
 }
 
 void setDriveMotors() {
-    int forwardBackward = throttleCurve(controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y), 127.0, 1.04, 10);
-    int turn = steerCurve(controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X), 127.0, 1.04, 10);
+    int forwardBackward = throttleCurve(controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y), 127.0, 1.08, 10);
+    int turn = steerCurve(controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X), 127.0, 1.08, 10);
     forwardBackward=(abs(forwardBackward)<10)?0:forwardBackward;
     turn=(abs(turn)<10)?0:turn;
     // float ts = 1;
