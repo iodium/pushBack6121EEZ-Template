@@ -1849,6 +1849,7 @@ void stopIntake() {
 void midGoalIntake() {
   setIntake(80,-80);
 }
+
 void update(double dx, double dy, double dtheta) {
   for (auto &p : particles) {
     double noise_x = randomGaussian(0, 0.5);  //noise to simulate variance, tune these values
@@ -1863,6 +1864,7 @@ void update(double dx, double dy, double dtheta) {
   }
   
 } 
+
 double getMapDistance(double x, double y, double theta) { //approximation, since we dont have ray casting
   double distances[4];
   distances[0] =abs((x-72)/cos(theta));
@@ -1876,6 +1878,7 @@ double getMapDistance(double x, double y, double theta) { //approximation, since
   }
   return min;
 }
+
 void weighting(double actualDistance) {
   double totalWeight = 0;
   for (auto &p: particles) { //for every particle
