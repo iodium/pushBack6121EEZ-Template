@@ -1,15 +1,21 @@
 #include "main.h"
+#include "drive.hpp"
+
 #include <cmath>
 #include <vector>
 #include <random>
+#include <numeric>
 struct Particle {
   double x;
   double y;
   double theta;
   double weight;
 };
+const double sigma = 0.1; //tune later
 std::vector<Particle> particles;
 std::default_random_engine randy(static_cast<unsigned>(std::time(nullptr)));
+std::uniform_real_distribution<double> randDouble(0, 1);
+Particle currentEstimate = {0, 0, getTheta(), 0};
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
@@ -1849,7 +1855,57 @@ void stopIntake() {
 void midGoalIntake() {
   setIntake(80,-80);
 }
+double getDist() {
+  std::vector<double> deltas;
+  deltas.push_back(driveLeftFront.get_position());
+  deltas.push_back(driveLeftMiddle.get_position());
+  deltas.push_back(driveLeftBack.get_position());
+  deltas.push_back(driveRightFront.get_position());
+  deltas.push_back(driveRightMiddle.get_position());
+  deltas.push_back(driveRightBack.get_position());
+  for (auto &d: deltas) {
+    d*=(M_PI*3.25/360.0); //convert degrees into distance
+  }
+  double sum = 0;
+  for (auto &d: deltas) {
+    sum+=d; 
+  }
+  return sum/6.0; //avg distance
+}
+double getTheta() {
+  return chassis.drive_imu_get();
+}
+void localizationTask(void*, double theta) {
+  double last_x = 0;
+  double last_y= 0;
+  double last_theta = theta;
 
+  while(true) {
+    double dx = getDist()*cos(last_theta)-last_x;
+    double dy = getDist()*sinf(last_theta)-last_y;
+    double dtheta = getTheta()-last_theta;
+    update(dx, dy, dtheta);
+    double dist = leftDistanceSensor.get(); //change this to incorporate more distance sensors
+    weighting(dist);
+    particles = resample();
+    currentEstimate = estimatePosition();
+    last_x = getDist()*cos(getTheta());
+    last_y = getDist()*sin(getTheta());
+    last_theta = getTheta();
+
+    pros::delay(10);
+  }
+}
+Particle estimatePosition() {
+  Particle est{0,0,0,0};
+  for (auto &p : particles) {
+    est.x += p.x*p.weight;
+    est.y += p.y*p.weight;
+    est.theta += p.theta*p.weight;
+
+  }
+  return est;
+}
 void update(double dx, double dy, double dtheta) {
   for (auto &p : particles) {
     double noise_x = randomGaussian(0, 0.5);  //noise to simulate variance, tune these values
@@ -1883,7 +1939,36 @@ void weighting(double actualDistance) {
   double totalWeight = 0;
   for (auto &p: particles) { //for every particle
     double expected = getMapDistance(p.x, p.y, p.theta);
+    double error = abs(actualDistance - expected);
+
+    p.weight = exp(-(error*error)/(2*sigma*sigma));
+    totalWeight +=p.weight;
   }
+  for (auto &p: particles) {
+    p.weight/=totalWeight;
+  }
+}
+std::vector<Particle> resample() {
+  std::vector<Particle> newParticles; //create new particle
+  double sum = 0; 
+  for (auto &p : particles) sum+=p.weight;
+  
+  double cumulative = 0; //total sum of weights so far, resets after every threshold crossing
+
+  for (int i = 0; i < particles.size(); i++) { //for each particle
+    double randThreshold = randDouble(randy); //create a random threshold; tune later
+    auto weightThreshold = static_cast<double>(i)*(sum/particles.size())+randThreshold;
+
+    for (auto &p: particles) { //for each particle
+      cumulative += p.weight; //add its weight to cumulative
+    
+      if (weightThreshold <= cumulative) { //cross threshold
+        newParticles.push_back(p); //the particle that caused it to cross
+        break; //reset for next particle
+      }
+    }
+  }
+  return newParticles; //same size as old particle array, better particles/duplicates exist
 }
 
 double randomGaussian(double mean, double standard_dev) { //normal distribution

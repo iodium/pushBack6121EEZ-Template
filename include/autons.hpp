@@ -50,3 +50,10 @@ void update(double dx, double dy, double dtheta);
 double randomGaussian(double mean, double standard_dev);
 void weighting(double actualDistance);
 double getMapDistance(double x, double y, double theta);
+void localizationTask(void*, double theta);
+std::vector<Particle> resample();
+
+double getTheta();
+double getDist();
+Particle estimatePosition();
+
