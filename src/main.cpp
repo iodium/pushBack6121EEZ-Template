@@ -35,8 +35,8 @@ int program = 0; // 0 = match, 1 = skills
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-13, -11, -12},     // Left Chassis Ports (negative port will reverse it!)
-    {18, 20, 19},  // Right Chassis Ports (negative port will reverse it!)
+    {-12, 14, -13},     // Left Chassis Ports (negative port will reverse it!)
+    {18, -15, 17},  // Right Chassis Ports (negative port will reverse it!)
 
     17,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
