@@ -25,8 +25,8 @@ Particle currentEstimate = {0, 0, getTheta(), 0};
 const int DRIVE_SPEED = 80;
 const int TURN_SPEED = 75;
 const int SWING_SPEED = 110;
-const int BOT_LENGTH = 0; //set later
-const int BOT_WIDTH = 0; //set later
+const int BOT_LENGTH = 17; //set later
+const int BOT_WIDTH = 13.5; //set later
 
 ///
 // Constants

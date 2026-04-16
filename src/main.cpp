@@ -89,7 +89,8 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      
+      {"Turn\n\nTurn 3 times.", turn_example},
+
       {"Left Qual", leftQual},
 
       {"Right Qual Purple", rightQualPurple},
@@ -135,7 +136,6 @@ void initialize() {
       {"Right Qual", rightQual},
 
 
-      {"Turn\n\nTurn 3 times.", turn_example},
 
       {"Left Qual", leftQual},
       {"Right 4 Push Matchload", right4PushMatchload},
@@ -293,6 +293,7 @@ void ez_template_extras() {
     if (master.get_digital(DIGITAL_A) && master.get_digital(DIGITAL_X)) {
       pros::motor_brake_mode_e_t preference = chassis.drive_brake_get();
       autonomous();
+      
       chassis.drive_brake_set(preference);
     }
 
@@ -378,9 +379,7 @@ void opcontrol() {
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
                 intakeState = 0;
             }
-            if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
-                ;
-            }
+            
     
     pros::delay(20);
 
