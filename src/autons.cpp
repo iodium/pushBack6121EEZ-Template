@@ -33,7 +33,8 @@ const int BOT_WIDTH = 13.5; //set later
 ///
 void default_constants() {
   // P, I, D, and Start I
-  chassis.pid_drive_constants_set(10, 0, 25);         // Fwd/rev constants, used for odom and non odom motions
+  //chassis.pid_drive_constants_set(1, 0, 1);         // Fwd/rev constants, used for odom and non odom motions
+  chassis.pid_drive_constants_set(6.7, 0, 1.2067);
   chassis.pid_heading_constants_set(5, 0.0, 19.0);        // Holds the robot straight while going forward without odom
   //chassis.pid_turn_constants_set(3.7, 0.67, 27.25, 15.0);     // Turn in place constants
   chassis.pid_turn_constants_set(1.5, 0, 8.7, 0);
@@ -1920,6 +1921,7 @@ void update(double dx, double dy, double dtheta) {
   }
   
 } 
+
 double getMapDistance(double x, double y, double theta) { //approximation, since we dont have ray casting
   double distances[4];
   distances[0] =abs((x-72)/cos(theta));
@@ -1933,6 +1935,7 @@ double getMapDistance(double x, double y, double theta) { //approximation, since
   }
   return min;
 }
+
 void weighting(double actualDistance) {
   double totalWeight = 0;
   for (auto &p: particles) { //for every particle

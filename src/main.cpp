@@ -15,7 +15,7 @@
 #define DIGITAL_SENSOR_PORT2 'H' 
 #define DIGITAL_SENSOR_PORT3 'G' 
 
-#define LEFT_DIST_SENSOR_PORT 4 //digital sensor ports (random numbers for now)
+#define LEFT_DIST_SENSOR_PORT 4 
 #define BACK_DIST_SENSOR_PORT 1
 #define RIGHT_DIST_SENSOR_PORT 2
 
@@ -38,7 +38,7 @@ ez::Drive chassis(
     {-15, -17, -16},     // Left Chassis Ports (negative port will reverse it!)
     {20, 18, 19},  // Right Chassis Ports (negative port will reverse it!)
 
-    5,      // IMU Port
+    21,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     450);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
@@ -127,7 +127,7 @@ void initialize() {
       {"Drive\n\nDrive forward and come back", drive_example},
       
 
-      {"Drive\n\nDrive forward and come back", drive_example},
+      
 
       {"Left Elim", leftElim},
 
