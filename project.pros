@@ -1,11 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-<<<<<<< HEAD
-    "project_name": "m",
-=======
     "project_name": "left_ex",
->>>>>>> 3cff9c9c344a928892ab685eec17e63266655764
     "target": "v5",
     "templates": {
       "EZ-Template": {
