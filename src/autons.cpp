@@ -1,5 +1,5 @@
 #include "main.h"
-#include "drive.hpp"
+#include "subSystemHeaders\globals.hpp"
 
 #include <cmath>
 #include <vector>
@@ -838,7 +838,7 @@ void stageSkills() {
   chassis.pid_wait();
 
   tripleStateMidGoal();
-  setIntake(70, -70);
+  setIntake(70, -70, 70);
   pros::delay(1200);
   // stopIntake(); //STOP intake balls
   // tripleStateStore();
@@ -870,7 +870,7 @@ void stageSkills() {
   chassis.pid_turn_set(270, 105);
   pros::delay(500);
   stopIntake();
-  setIntake(80,-80);
+  setIntake(80,-80, 80);
 
   chassis.pid_drive_set(-get_distance(-37.243, 55.834, 38.312, 55.834), 115); //drive to other side of field
   pros::delay(1500);
@@ -971,9 +971,9 @@ void stageSkills() {
 
   tripleStateMidGoal();
   midGoalIntake();
-  setIntake(70,-70);
+  setIntake(70,-70,80);
   pros::delay(1200);
-  setIntake(55, -55);
+  setIntake(55, -55, 55);
   pros::delay(1600);
   stopIntake();
   chassis.pid_drive_set(-0.5, 40); //drive ba ckward slightly to nudge blocks in further
@@ -1007,7 +1007,7 @@ void stageSkills() {
   chassis.pid_turn_set(90, 105);
   pros::delay(500);
   stopIntake();
-  setIntake(50,-50);
+  setIntake(50,-50, 50);
 
   //**maybe make faster */
   chassis.pid_drive_set(-get_distance(34.243, -53.834, -38.312, -53.834), 115); //drive to other side of field
@@ -1112,7 +1112,7 @@ void skills(){
   chassis.pid_wait();
 
   tripleStateMidGoal();
-  setIntake(70, -70);
+  setIntake(70, -70, 70);
   pros::delay(1200);
   // stopIntake(); //STOP intake balls
   // tripleStateStore();
@@ -1144,7 +1144,7 @@ void skills(){
   chassis.pid_turn_set(270, 105);
   pros::delay(500);
   stopIntake();
-  setIntake(80,-80);
+  setIntake(80,-80, 80);
 
   chassis.pid_drive_set(-get_distance(-37.243, 55.834, 38.312, 55.834), 115); //drive to other side of field
   pros::delay(1500);
@@ -1245,9 +1245,9 @@ void skills(){
 
   tripleStateMidGoal();
   midGoalIntake();
-  setIntake(70,-70);
+  setIntake(70,-70, 70);
   pros::delay(1200);
-  setIntake(55, -55);
+  setIntake(55, -55, 55);
   pros::delay(1600);
   stopIntake();
   chassis.pid_drive_set(-0.5, 40); //drive ba ckward slightly to nudge blocks in further
@@ -1281,7 +1281,7 @@ void skills(){
   chassis.pid_turn_set(90, 105);
   pros::delay(500);
   stopIntake();
-  setIntake(50,-50);
+  setIntake(50,-50, 50);
 
   //**maybe make faster */
   chassis.pid_drive_set(-get_distance(34.243, -53.834, -38.312, -53.834), 115); //drive to other side of field
@@ -1397,7 +1397,7 @@ void soloAWP() {
   pros::delay(900);
 
   pros::delay(200);
-  setIntake(0, 0); //stop intaking
+  setIntake(0, 0, 0); //stop intaking
   matchLoad.extend(); //extend match load to trap balls
 
 
@@ -1588,7 +1588,7 @@ void soloAWPYellow() {
   pros::delay(900);
 
   pros::delay(200);
-  setIntake(0, 0); //stop intaking
+  setIntake(0, 0,0); //stop intaking
   matchLoad.extend(); //extend match load to trap balls
 
 
@@ -1672,7 +1672,7 @@ void soloAWPPurple() {
   pros::delay(900);
 
   pros::delay(200);
-  setIntake(0, 0); //stop intaking
+  setIntake(0, 0, 0); //stop intaking
   matchLoad.extend(); //extend match load to trap balls
 
 
@@ -1825,35 +1825,35 @@ double get_y(int facing) {
 }
 
 void tripleStateLongGoal() {
-  tripleStateDown.extend();
-  tripleStateUp.extend();
+  // tripleStateDown.extend();
+  // tripleStateUp.extend();
 }
 
 void tripleStateStore() {
-  tripleStateDown.retract(); 
-  tripleStateUp.extend();
+  // tripleStateDown.retract(); 
+  // tripleStateUp.extend();
 }
 
 void tripleStateMidGoal() {
-  tripleStateDown.retract();
-  tripleStateUp.retract();
+  // tripleStateDown.retract();
+  // tripleStateUp.retract();
 }
 
 void fullIntake() {
-  setIntake(127, -127);
+  setIntake(127, -127, 127);
 }
 
 void fullOuttake() {
-  setIntake(-127, 127);
+  setIntake(-127, 127, 127);
 }
 void slowOuttake() {
-  setIntake(-40, 40);
+  setIntake(-40, 40, 40);
 }
 void stopIntake() {
-  setIntake(0, 0);
+  setIntake(0, 0, 0);
 }
 void midGoalIntake() {
-  setIntake(80,-80);
+  setIntake(80,-80, 80);
 }
 double getDist() {
   std::vector<double> deltas;
