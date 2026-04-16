@@ -12,18 +12,18 @@
 /////
 #define DIGITAL_SENSOR_PORT 'A'
 #define DIGITAL_SENSOR_PORT1 'B'
-#define DIGITAL_SENSOR_PORT2 'C' 
-#define DIGITAL_SENSOR_PORT3 'D' 
+#define DIGITAL_SENSOR_PORT2 'H' 
+#define DIGITAL_SENSOR_PORT3 'G' 
 
 #define LEFT_DIST_SENSOR_PORT 4 //digital sensor ports (random numbers for now)
 #define BACK_DIST_SENSOR_PORT 1
 #define RIGHT_DIST_SENSOR_PORT 2
 
-pros::ADIPneumatics tripleStateDown(DIGITAL_SENSOR_PORT3, false);
-pros::ADIPneumatics tripleStateUp(DIGITAL_SENSOR_PORT1, false); //update digital sensor port
+pros::ADIPneumatics midGoalDescore(DIGITAL_SENSOR_PORT, false);
+pros::ADIPneumatics hood(DIGITAL_SENSOR_PORT1, false); //update digital sensor port
 
-pros::ADIPneumatics wing(DIGITAL_SENSOR_PORT2,false);
-pros::ADIPneumatics matchLoad(DIGITAL_SENSOR_PORT, false);
+pros::ADIPneumatics matchLoad(DIGITAL_SENSOR_PORT2,false);
+pros::ADIPneumatics wing(DIGITAL_SENSOR_PORT3, false);
 
 
 //construct distance sensors
@@ -35,10 +35,10 @@ int program = 0; // 0 = match, 1 = skills
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-12, -14, -13},     // Left Chassis Ports (negative port will reverse it!)
-    {18, 15,20},  // Right Chassis Ports (negative port will reverse it!)
+    {-15, -17, -16},     // Left Chassis Ports (negative port will reverse it!)
+    {20, 18, 19},  // Right Chassis Ports (negative port will reverse it!)
 
-    17,      // IMU Port
+    5,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     450);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
@@ -334,7 +334,6 @@ void opcontrol() {
 
   
     setIntakeMotors(); //must use own function to set motors other than drivetrain
-    
     pros::delay(50);
 
     // . . .
@@ -349,17 +348,26 @@ void opcontrol() {
     //     matchLoad.toggle();
     // }
 
-            if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-                tripleStateDown.extend();
-                tripleStateUp.extend();
+            // if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+            //     tripleStateDown.extend();
+            //     tripleStateUp.extend();
+            // }
+            // else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+            //     tripleStateDown.retract();
+            //     tripleStateUp.retract();
+            // }
+            // else{
+            //     tripleStateDown.retract();
+            //     tripleStateUp.extend();
+            // }
+            if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) { 
+              hood.extend();
+            } else{
+              hood.retract();
+              
             }
-            else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-                tripleStateDown.retract();
-                tripleStateUp.retract();
-            }
-            else{
-                tripleStateDown.retract();
-                tripleStateUp.extend();
+            if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
+              midGoalDescore.toggle();
             }
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
               wing.toggle();
@@ -371,7 +379,7 @@ void opcontrol() {
                 intakeState = 0;
             }
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
-                skills();
+                ;
             }
     
     pros::delay(20);

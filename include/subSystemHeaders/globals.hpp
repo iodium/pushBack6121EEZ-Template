@@ -5,6 +5,8 @@
 //Motors
 extern pros::Motor intake1;
 extern pros::Motor intake2;
+extern pros::Motor intake3;
+
 extern pros::Motor driveLeftBack;
 extern pros::Motor driveLeftFront;
 extern pros::Motor driveLeftMiddle;
