@@ -37,7 +37,7 @@ void default_constants() {
   chassis.pid_drive_constants_set(6.7, 0, 1.2067);
   chassis.pid_heading_constants_set(5, 0.0, 19.0);        // Holds the robot straight while going forward without odom
   //chassis.pid_turn_constants_set(3.7, 0.67, 27.25, 15.0);     // Turn in place constants
-  chassis.pid_turn_constants_set(1.5, 0, 8.7, 0);
+  chassis.pid_turn_constants_set(1.3, 0, 6, 0);
   chassis.pid_swing_constants_set(6.0, 0.0, 65.0);           // Swing constants
   chassis.pid_odom_angular_constants_set(6.5, 0.0, 52.5);    // Angular contrggit pol for odom motions
   chassis.pid_odom_boomerang_constants_set(5.8, 0.0, 32.5);  // Angular control for boomerang motions
@@ -525,29 +525,27 @@ void leftQual(){
 void rightQual(){
   chassis.drive_angle_set(90_deg); //sets initial heading to facing 90 degrees
   wing.extend();
-  tripleStateStore();
 
-  chassis.pid_turn_set(get_heading(-45.833, -13.946, -28.707, -21), 127, true); //turn to face balls
+  chassis.pid_turn_set(get_heading(-45.833, -13.946, -26.707, -21), 127, true); //turn to face balls
   pros::delay(500);
 
-  chassis.pid_drive_set(get_distance(-45.833, -13.946, -28.707, -21)+2, 90);
+  chassis.pid_drive_set(get_distance(-45.833, -13.946, -23.707, -21)+1, 60);
   fullIntake(); //intake balls  
-  pros::delay(400);
-  matchLoad.extend(); //extend to trap balls
-  pros::delay(400);
-
-  chassis.pid_turn_set(get_heading(-28.707, -21, -43.327, -45.5), 110); //turn to matchload setup
   pros::delay(600);
-  stopIntake();
+
+  pros::delay(500);
+  matchLoad.extend(); //extend matchload
+  pros::delay(300);
+  chassis.pid_turn_set(get_heading(-23.707, -21, -43.327, -45.5), 110); //turn to matchload setup
+  pros::delay(600);
 
   // chassis.pid_drive_set(get_distance(-28.707, -21, -43.327, -45.5), 90); //drive to matchload setup
   // pros::delay(800);
 
   chassis.pid_drive_set(29, 90); //drive to matchload setup
-  chassis.pid_wait();
 
+  pros::delay(800);
   chassis.pid_turn_set(270, 105); //turn to face matchload
-  matchLoad.extend(); //extend matchload
   pros::delay(400);
 
   fullIntake(); //intake matchload balls
@@ -561,7 +559,7 @@ void rightQual(){
 
   slowOuttake(); //outtake a little to free up balls
   pros::delay(250);
-  tripleStateLongGoal();
+  hood.extend();
   fullIntake(); //score
 
   matchLoad.retract(); //retract matchload 
@@ -573,7 +571,7 @@ void rightQual(){
   chassis.pid_turn_set(315, 127); //turn to face wing setup
   pros::delay(500);
   
-  chassis.pid_drive_set(12, 127); //drive to alley lane
+  chassis.pid_drive_set(12.5, 127); //drive to alley lane
   chassis.pid_wait();
 
   chassis.pid_turn_set(270, 105); //turn to face direction for wing
@@ -1841,20 +1839,20 @@ void tripleStateMidGoal() {
 }
 
 void fullIntake() {
-  setIntake(127, -127, 127);
+  setIntake(127, 127, 127);
 }
 
 void fullOuttake() {
-  setIntake(-127, 127, 127);
+  setIntake(-127, -127, -127);
 }
 void slowOuttake() {
-  setIntake(-40, 40, 40);
+  setIntake(-40, -40, -40);
 }
 void stopIntake() {
-  setIntake(0, 0, 0);
+  setIntake(0, 20, 0);
 }
 void midGoalIntake() {
-  setIntake(80,-80, 80);
+  setIntake(50,-50, 100);
 }
 double getDist() {
   std::vector<double> deltas;

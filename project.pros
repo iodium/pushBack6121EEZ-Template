@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "left_ex",
+    "project_name": "rQualht",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -426,7 +426,7 @@
     "upload_options": {
       "description": "roboticsisez.com",
       "icon": "alien",
-      "slot": 8
+      "slot": 3
     },
     "use_early_access": false
   }
