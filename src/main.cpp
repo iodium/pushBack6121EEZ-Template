@@ -89,7 +89,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-    
+      {"right 3+4", rightLowGoal},
+      
+      {"Right Qual", rightQual},
       {"Left Elim", leftElim},
       {"Right Qual", rightQual},
 
@@ -119,7 +121,7 @@ void initialize() {
 
       {"Left Qual", leftQual},
 
-      {"Right Qual", rightQual},
+     
 
 
 
