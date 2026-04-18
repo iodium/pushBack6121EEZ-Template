@@ -618,7 +618,7 @@ void rightQual(){
   chassis.pid_turn_set(315, 127); //turn to face wing setup
   pros::delay(500);
   
-  chassis.pid_drive_set(13.2, 127); //drive to alley lane
+  chassis.pid_drive_set(13.8, 127); //drive to alley lane
   pros::delay(750);
 
   chassis.pid_turn_set(270, 105); //turn to face direction for wing
@@ -653,8 +653,8 @@ void leftElim(){
   pros::delay(400);
 
   fullIntake(); //intake matchload balls
-  chassis.pid_drive_set(23, 70); //drive into matchload while intaking
-  pros::delay(600);
+  chassis.pid_drive_set(24, 70); //drive into matchload while intaking
+  pros::delay(800);
   chassis.pid_drive_set(-0.25, 40); //drive back slightly
   pros::delay(400);
 
@@ -675,7 +675,7 @@ void leftElim(){
   chassis.pid_turn_set(319, 127); //turn to face wing setup
   pros::delay(400);
   
-  chassis.pid_drive_set(13, 127); //drive to alley lane
+  chassis.pid_drive_set(12.5, 127); //drive to alley lane
   pros::delay(600);
 
   chassis.pid_turn_set(267, 105); //turn to face direction for wing
@@ -685,6 +685,9 @@ void leftElim(){
  
   chassis.pid_drive_set(-30, 127); //drive into alley and wing
 
+}
+void doNothing() {
+  
 }
 
 /**
