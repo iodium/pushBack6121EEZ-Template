@@ -575,7 +575,7 @@ void rightQual(){
   chassis.pid_wait();
 
   chassis.pid_turn_set(270, 105); //turn to face direction for wing
-  pros::delay(400);
+  pros::delay(550);
 
   wing.retract(); //put wing down
  
