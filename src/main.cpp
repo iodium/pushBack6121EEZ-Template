@@ -365,7 +365,6 @@ void opcontrol() {
               if (midGoalDescore.is_extended()) {
                 matchLoad.retract();
               }
-              
             }
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
               wing.toggle();
