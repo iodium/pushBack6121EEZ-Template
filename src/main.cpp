@@ -89,10 +89,14 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+    
+      {"right 3+4", rightLowGoal},
+    
+      {"Solo AWP", soloAWP},
       
       {"Left Qual", leftQual},
       
-      {"right 3+4", rightLowGoal},
+      
 
       {"gurt", doNothing},
       {"Left Elim", leftElim},
@@ -111,7 +115,6 @@ void initialize() {
 
 
 
-       {"Solo AWP", soloAWP},
 
       {"Turn\n\nTurn 3 times.", turn_example},
 
@@ -359,6 +362,10 @@ void opcontrol() {
             }
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
               midGoalDescore.toggle();
+              if (midGoalDescore.is_extended()) {
+                matchLoad.retract();
+              }
+              
             }
             if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
               wing.toggle();
