@@ -668,7 +668,7 @@ void doNothing() {
 void skills(){
   chassis.drive_angle_set(90); //sets initial heading to facing 0 degrees
   wing.extend();
-  tripleStateStore();
+  
 
   chassis.pid_drive_set(get_distance(-45.833, 13.946, -34.6, 13.946), 105);
   pros::delay(400);
@@ -691,8 +691,7 @@ void skills(){
   chassis.pid_drive_set(-1*(get_distance(-22.8, 24.4,-9.882, 10.276) ), 75); //drive into mid goal
   chassis.pid_wait();
 
-  tripleStateMidGoal();
-  setIntake(70, -70, 70);
+  setIntake(50, -50, 70);
   pros::delay(1200);
   // stopIntake(); //STOP intake balls
   // tripleStateStore();
@@ -700,7 +699,6 @@ void skills(){
   chassis.pid_drive_set(get_distance(-9.882, 10.276,-46.43, 41), 95); //drive up to 1st matchload
   pros::delay(300);
   stopIntake(); //STOP intake balls
-  tripleStateStore();
   pros::delay(800);
 
 
@@ -724,7 +722,6 @@ void skills(){
   chassis.pid_turn_set(270, 105);
   pros::delay(500);
   stopIntake();
-  setIntake(80,-80, 80);
 
   chassis.pid_drive_set(-get_distance(-37.243, 55.834, 38.312, 55.834), 115); //drive to other side of field
   pros::delay(1500);
@@ -739,7 +736,6 @@ void skills(){
   pros::delay(500);
   chassis.pid_drive_set(-14, 85);
   pros::delay(600);
-  tripleStateLongGoal();
   fullIntake();
   chassis.pid_turn_set(90, 105); //turn to face long goal
 
@@ -762,17 +758,15 @@ void skills(){
   stopIntake();
   chassis.pid_drive_set(-get_distance(29.5, 46.259,59,46.25), 100);
   pros::delay(650);
-  tripleStateLongGoal();
   fullIntake();
-  pros::delay(2350);//score
-  tripleStateStore();
+  pros::delay(2000);//score
   stopIntake();
 
-  // removed hood push
-  chassis.pid_drive_set(6, 85); // hood push start
-  pros::delay(400); // idk hood wait
-  chassis.pid_drive_set(-6, 105); // hood push end
-  pros::delay(400); // idk hood wait
+  // // removed hood push
+  // chassis.pid_drive_set(6, 85); // hood push start
+  // pros::delay(400); // idk hood wait
+  // chassis.pid_drive_set(-6, 105); // hood push end
+  // pros::delay(400); // idk hood wait
 
   matchLoad.retract();
   chassis.pid_drive_set(get_distance(28.36, 46.25,47.451,46.25), 110);
@@ -823,11 +817,10 @@ void skills(){
   chassis.pid_wait();
   
 
-  tripleStateMidGoal();
   midGoalIntake();
   setIntake(70,-70, 70);
   pros::delay(1200);
-  setIntake(55, -55, 55);
+  setIntake(40, -40, 40);
   pros::delay(1600);
   stopIntake();
   chassis.pid_drive_set(-0.5, 40); //drive ba ckward slightly to nudge blocks in further
@@ -836,7 +829,6 @@ void skills(){
   chassis.pid_turn_set(get_heading(8, -8, 43, -41), 100); //turn to face setup for matchload
   chassis.pid_drive_set(get_distance(8, -8, 43, -41)+0.5, 110); //drive to matchload setup)
   pros::delay(1000);
-  tripleStateStore();
 
   //3rd matchload:
 
@@ -879,13 +871,11 @@ void skills(){
   pros::delay(400);
   chassis.pid_drive_set(-15, 85);
   pros::delay(550);
-  tripleStateLongGoal();
   fullIntake();
   
   pros::delay(300);
   chassis.pid_drive_set(-20, 10);
   pros::delay(1800);//score
-  tripleStateStore();
   stopIntake();
 
   chassis.pid_drive_set(get_distance(-28.596,-46.412, -32, -46.259), 105);
@@ -901,12 +891,10 @@ void skills(){
   stopIntake();
   chassis.pid_drive_set(-get_distance(-29.5, -46.259, -59, -46.25)-2, 90);
   pros::delay(800);
-  tripleStateLongGoal();
   fullIntake();
   chassis.pid_drive_set(-40, 20);
 
   pros::delay(2700);//score
-  tripleStateStore();
   stopIntake();
   matchLoad.retract();
   chassis.pid_drive_set(5, 85); // hood push start
