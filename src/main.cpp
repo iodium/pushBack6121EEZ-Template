@@ -89,17 +89,20 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Left Elim", leftElim},
+      {"gurt", doNothing},
       {"right 3+4", rightLowGoal},
+      
+      
       {"Right Qual", rightQual},
-    
       {"Solo AWP", soloAWP},
+      
+      {"Left Elim", leftElim},
+    
       
       {"Left Qual", leftQual},
       
       
 
-      {"gurt", doNothing},
 
 
       {"Turn\n\nTurn 3 times.", turn_example},
